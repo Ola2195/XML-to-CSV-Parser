@@ -1,0 +1,101 @@
+<mikros typ="energetyka">
+	<emitor nr="2" typ="pomiarowy" nazwa="K3">
+        <status>
+            <auto pkt="1013" />
+            <reka pkt="1012" />
+        </status>
+
+        <odniesienie>
+            <wartosc pkt="1054" />
+        </odniesienie>
+
+        <parametry_referencyjne>
+            <wartosc typ="O2" pkt="1073" />
+            <wartosc typ="H2O" pkt="1093" />
+            <wartosc typ="T" pkt="1113" />
+            <wartosc typ="P" pkt="1133" />
+        </parametry_referencyjne>
+
+        <parametr id="1" typ="VSS">
+            <!-- przeplyw -->
+            <wartosc pkt="1167" mnoznik="1.0" modyfikacja_archiwum="1" />
+            <status pkt="1162" />
+            <precyzja srednia="1" suma="1" />
+            <wartosc_zastepcza pkt="1172" />
+        </parametr>
+        <parametr id="2" typ="VSW">
+            <!-- przeplyw -->
+            <wartosc pkt="1165" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+        </parametr>
+        <parametr id="3" typ="VSR">
+            <!-- przeplyw -->
+            <wartosc pkt="1164" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+        </parametr>
+        <parametr id="4" typ="MOC">
+            <!-- moc -->
+            <wartosc pkt="1050" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+        </parametr>
+        <parametr id="5" typ="O2">
+            <!-- tlen -->
+            <wartosc pkt="1070" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+            <wartosc_referencyjna pkt="1073" mnoznik="1.0" />
+        </parametr>
+        <parametr id="6" typ="H2O">
+            <!-- H2O  -->
+            <wartosc pkt="1090" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+            <wartosc_referencyjna pkt="1093" mnoznik="1.0" />
+        </parametr>
+        <parametr id="7" typ="T">
+            <!-- Tsp  -->
+            <wartosc pkt="1110" mnoznik="1.0" />
+            <precyzja srednia="2" suma="1" />
+            <wartosc_referencyjna pkt="1113" mnoznik="1.0" />
+        </parametr>
+        <parametr id="8" typ="P">
+            <!-- Psp  -->
+            <wartosc pkt="1130" mnoznik="1.0" />
+            <precyzja srednia="2" suma="1" />
+            <wartosc_referencyjna pkt="1133" mnoznik="1.0" />
+        </parametr>
+        <parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+            <!-- przeplyw -->
+            <wartosc pkt="1166" mnoznik="1.0" />
+            <precyzja srednia="1" suma="1" />
+        </parametr>
+
+        <stezenie id="1" typ="PYL">
+            <!-- pyl -->
+            <wartosc pkt="1210" mnoznik="1.0" />
+            <status pkt="1212" />
+            <srednia okres="48h" zastap="24h" />
+            <przeplyw id="1" mnoznik="0.001"/>
+            <niepewnosc pkt="1248" />
+            <standard id="1" typ="stezenie" korekcja="niepewnosc" />
+            <precyzja srednia="1" emisja="2" />		
+            <prognoza okres="1h" aktualna_pkt="6051" poprzednia_pkt="6058" typ="stezenie" />
+            <prognoza okres="24h" pkt="1217" aktualna_pkt="6052" standard_pkt="6053" typ="stezenie" />
+            <prognoza okres="1M" aktualna_pkt="6054" standard_pkt="6055" typ="stezenie" />
+            <zakres_kalibracji dol_pkt="1244" gora_pkt="1245" />		
+            <wartosc_pomiarowa pkt="1210" />
+        </stezenie>
+        <standard id="1">
+            <!-- standard pylu -->
+            <wartosc pkt="1213" standard="H" typ="24h" mnoznik="1.0" />
+            <wartosc pkt="1213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+            <precyzja srednia="0" waga="1" />
+        </standard>
+        <stezenie id="8" typ="CO2">
+            <wartosc pkt="1319" mnoznik="1.0" />
+            <status pkt="1312" />
+            <przeplyw id="1" mnoznik="0.001"/>
+            <precyzja srednia="1" emisja="1" />
+            <wartosc_skorygowana pkt="1310" mnoznik="1.0" />
+        </stezenie>
+
+	</emitor>
+</mikros>
