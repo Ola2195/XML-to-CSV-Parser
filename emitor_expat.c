@@ -9,7 +9,7 @@
 #define ELEMENTS        30
 
 /*
- * Struktura parsowanych danych
+ * Structure of parsed data
  */
 typedef struct {
     char emitor[10];
@@ -34,7 +34,7 @@ void saveData(struct tm *tm, char *str ) {
 }
 
 void saveOneElement( void ) {
-    time_t t = time(NULL);      // Zmienna czasu systemowego
+    time_t t = time(NULL);      // System time variable
     struct tm tm = *localtime(&t);
     char output[300];
 
@@ -43,13 +43,13 @@ void saveOneElement( void ) {
 }
 
 /**
- * @brief   Funkcja wywoływana, gdy parser napotyka początek elementu XML.
- *          Funkcja obsługuje początkowy element XML, takie jak 'status', 'wartosc' czy 'stezenie'. 
- *          Przypisuje wartości atrybutów do struktury danych, które później zostaną zapisane.
- *          Zwiększa licznik zebranych danych po znalezieniu odpowiedniego elementu.
- * @param userData  Wskaźnik na dane użytkownika (może być użyty do przekazania dodatkowych informacji do parsera, np. pliku wynikowego).
- * @param name      Nazwa aktualnie przetwarzanego elementu XML.
- * @param attr      Tablica atrybutów elementu XML (naprzemiennie nazwa i wartość atrybutu).
+ * @brief   Function called when the parser encounters the beginning of an XML element.
+ *          The function handles the beginning of an XML element, such as 'status', 'value' or 'status'. 
+ *          Assigns attribute values to the data structure to be saved later.
+ *          Increases the counter of collected data when the corresponding element is found.
+ * @param userData  A pointer to the user data (can be used to pass additional information to the parser, such as the resulting file).
+ * @param name      Name of the currently processed XML element.
+ * @param attr      An array of attributes of the XML element (alternating name and attribute value).
  */
 void XMLCALL startElement(void *userData, const char *name, const char **attr) {
     if(!strcmp(name, "emitor")) {
@@ -84,9 +84,9 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr) {
 }
 
 /**
- * @brief   Funkcja wywoływana, gdy parser napotyka koniec elementu XML.
- * @param userData  Wskaźnik na dane użytkownika (przekazywany z parsera).
- * @param name      Nazwa aktualnie zakończonego elementu XML.
+ * @brief   Function called when the parser encounters the end of an XML element.
+ * @param userData  A pointer to the user data (passed from the parser).
+ * @param name      Name of the currently terminated XML element.
  */
 void XMLCALL endElement(void *userData, const char *name) {
     if(data.n_tags > 0)
@@ -94,20 +94,18 @@ void XMLCALL endElement(void *userData, const char *name) {
 }
 
 /**
- * @brief   Funkcja wywoływana, gdy parser napotyka dane tekstowe w elemencie XML.
- * @param userData  Wskaźnik na dane użytkownika (przekazywany z parsera).
- * @param s         Wskaźnik na dane tekstowe (ciąg znaków) znajdujące się w elemencie XML.
- * @param len       Długość danych tekstowych.
+ * @brief   Function called when the parser encounters text data in an XML element.
+ * @param userData  A pointer to the user data (passed from the parser).
+ * @param s         A pointer to the text data (string) contained in the XML element.
+ * @param len       Length of the text data.
  */
 void XMLCALL characterData(void *userData, const XML_Char *s, int len) {
     // TODO
 }
 
 int main() {
-    
-
     /*
-     * Obsługa zewnętrznych plików XML i CSV.
+     * Support for external XML and CSV files.
      */
 
     FILE *inputFile = fopen(INPUT_FILENAME, "r");
@@ -122,12 +120,12 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // Inicjalizacja parsera
+    // Parser initialization
     XML_Parser parser = XML_ParserCreate(NULL);
     XML_SetElementHandler(parser, startElement, endElement);
     XML_SetCharacterDataHandler(parser, characterData);
 
-    // Parsowanie pliku XML
+    // XML file parsing
     char buffer[1024];
     int bytesRead;
     while ((bytesRead = fread(buffer, 1, sizeof(buffer), inputFile)) > 0) {
