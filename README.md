@@ -42,7 +42,7 @@ This program parses an XML file and extracts specific data, saving the results i
 The CSV output will have the following format:
 
 ```
-"YYYY-MM-DD","Hour","Emitor.Tags","Pkt Value"
+"YYYY-MM-DD","Hour","Emitor.Tags","Pkt_Value"
 ```
 
 For example:
