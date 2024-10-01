@@ -1,101 +1,1974 @@
+<!-- DALKIA LODZ EC4 konfiguracja kotlow -->
+<!-- 2014.01.10 zmiana na PSSQL21  -->
+<!-- Gerard  -->
+<!-- 2016.03.19 uruchomienie PSSQL31  -->
+<!-- 2016.03.19 K2 K5 oraz K7 NH3 precyzja 2 HF prec 2 HCL prec 1 -->
+<!-- 2016.03.21 precyzja PYL teraz  1 -->
+<!-- 2016.04.24 dodano pkt dla HCL HF NH3 dla EC4 -->
+<!-- 2016.06.14 zmiany kanalow K2, K3, K4K5  -->
+<!-- 2016.07.22 HCL zmiana precyzji -->
+<!-- 2020.07.13 Dostosowanie do wymagan Dyrektywy IED -->
+
 <mikros typ="energetyka">
+<!-- <mikros typ="energetyka" modyfikacja_archiwum="1" > -->
+
+<!-- EMITOR 1 (K3K4 - pomiar na kominie) -->
+
+<!-- EMITOR 2 (Pomiar na kanale biomasowy) -->
+
+
 	<emitor nr="2" typ="pomiarowy" nazwa="K3">
-        <status>
-            <auto pkt="1013" />
-            <reka pkt="1012" />
-        </status>
+	<status>
+		<auto pkt="1013" />
+		<reka pkt="1012" />
+	</status>
+	<odniesienie>
+		<wartosc pkt="1054" />
+	</odniesienie>
+	<parametry_referencyjne>
+		<wartosc typ="O2" pkt="1073" />
+		<wartosc typ="H2O" pkt="1093" />
+		<wartosc typ="T" pkt="1113" />
+		<wartosc typ="P" pkt="1133" />
+	</parametry_referencyjne>
+	<parametr id="1" typ="VSS">
+		<!-- przeplyw -->
+		<wartosc pkt="1167" mnoznik="1.0" modyfikacja_archiwum="1" />
+		<status pkt="1162" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_zastepcza pkt="1172" />
+	</parametr>
+	<parametr id="2" typ="VSW">
+		<!-- przeplyw -->
+		<wartosc pkt="1165" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="3" typ="VSR">
+		<!-- przeplyw -->
+		<wartosc pkt="1164" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="4" typ="MOC">
+		<!-- moc -->
+		<wartosc pkt="1050" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="5" typ="O2">
+		<!-- tlen -->
+		<wartosc pkt="1070" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="1073" mnoznik="1.0" />
+	</parametr>
+	<parametr id="6" typ="H2O">
+		<!-- H2O  -->
+		<wartosc pkt="1090" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="1093" mnoznik="1.0" />
+	</parametr>
+	<parametr id="7" typ="T">
+		<!-- Tsp  -->
+		<wartosc pkt="1110" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="1113" mnoznik="1.0" />
+	</parametr>
+	<parametr id="8" typ="P">
+		<!-- Psp  -->
+		<wartosc pkt="1130" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="1133" mnoznik="1.0" />
+	</parametr>
+	<parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="1166" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<stezenie id="1" typ="PYL">
+		<!-- pyl -->
+		<wartosc pkt="1210" mnoznik="1.0" />
+		<status pkt="1212" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="1248" />
+		<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="1" emisja="2" />		
+		<prognoza okres="1h" aktualna_pkt="6051" poprzednia_pkt="6058" typ="stezenie" />
+		<prognoza okres="24h" pkt="1217" aktualna_pkt="6052" standard_pkt="6053" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6054" standard_pkt="6055" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="1244" gora_pkt="1245" />		
+		<wartosc_pomiarowa pkt="1210" />
+	</stezenie>
+	<standard id="1">
+		<!-- standard pylu -->
+		<wartosc pkt="1213" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="1213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
 
-        <odniesienie>
-            <wartosc pkt="1054" />
-        </odniesienie>
+	<stezenie id="2" typ="SO2">
+		<!-- SO2 -->
+		<wartosc pkt="1260" mnoznik="1.0" />
+		<status pkt="1262" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="1298" />
+		<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6061" poprzednia_pkt="6068" typ="stezenie" />
+		<prognoza okres="24h" pkt="1267"  aktualna_pkt="6062" standard_pkt="6063" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6064" standard_pkt="6065" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="1294" gora_pkt="1295" />		
+		<wartosc_pomiarowa pkt="1260" />
+	</stezenie>
+	<standard id="2">
+		<!-- standard SO2 -->
+		<wartosc pkt="1263" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="1263" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
 
-        <parametry_referencyjne>
-            <wartosc typ="O2" pkt="1073" />
-            <wartosc typ="H2O" pkt="1093" />
-            <wartosc typ="T" pkt="1113" />
-            <wartosc typ="P" pkt="1133" />
-        </parametry_referencyjne>
+	<stezenie id="3" typ="CO">
+		<!-- CO -->
+		<wartosc pkt="1360" mnoznik="1.0" />
+		<status pkt="1362" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="1398" />
+		<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="24h" aktualna_pkt="1367" standard_pkt="1369" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="1394" gora_pkt="1395" />		
+		<wartosc_pomiarowa pkt="1360" />
+	</stezenie>
+	<standard id="3">
+		<!-- standard CO -->
+		<wartosc pkt="1363" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="1363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
 
-        <parametr id="1" typ="VSS">
-            <!-- przeplyw -->
-            <wartosc pkt="1167" mnoznik="1.0" modyfikacja_archiwum="1" />
-            <status pkt="1162" />
-            <precyzja srednia="1" suma="1" />
-            <wartosc_zastepcza pkt="1172" />
-        </parametr>
-        <parametr id="2" typ="VSW">
-            <!-- przeplyw -->
-            <wartosc pkt="1165" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-        </parametr>
-        <parametr id="3" typ="VSR">
-            <!-- przeplyw -->
-            <wartosc pkt="1164" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-        </parametr>
-        <parametr id="4" typ="MOC">
-            <!-- moc -->
-            <wartosc pkt="1050" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-        </parametr>
-        <parametr id="5" typ="O2">
-            <!-- tlen -->
-            <wartosc pkt="1070" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-            <wartosc_referencyjna pkt="1073" mnoznik="1.0" />
-        </parametr>
-        <parametr id="6" typ="H2O">
-            <!-- H2O  -->
-            <wartosc pkt="1090" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-            <wartosc_referencyjna pkt="1093" mnoznik="1.0" />
-        </parametr>
-        <parametr id="7" typ="T">
-            <!-- Tsp  -->
-            <wartosc pkt="1110" mnoznik="1.0" />
-            <precyzja srednia="2" suma="1" />
-            <wartosc_referencyjna pkt="1113" mnoznik="1.0" />
-        </parametr>
-        <parametr id="8" typ="P">
-            <!-- Psp  -->
-            <wartosc pkt="1130" mnoznik="1.0" />
-            <precyzja srednia="2" suma="1" />
-            <wartosc_referencyjna pkt="1133" mnoznik="1.0" />
-        </parametr>
-        <parametr id="9" typ="VSU" modyfikacja_archiwum="1">
-            <!-- przeplyw -->
-            <wartosc pkt="1166" mnoznik="1.0" />
-            <precyzja srednia="1" suma="1" />
-        </parametr>
+	<stezenie id="4" typ="NOX">
+		<!-- NOx -->
+		<wartosc pkt="1410" mnoznik="1.0" />
+		<status pkt="1412" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="1448" />
+		<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6071" poprzednia_pkt="6078" typ="stezenie" />
+		<prognoza okres="24h" pkt="1417" aktualna_pkt="6072" standard_pkt="6073" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6074" standard_pkt="6075" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="1444" gora_pkt="1445" />		
+		<wartosc_pomiarowa pkt="1410" />
+	</stezenie>
+	<standard id="4">
+		<!-- standard NOx -->
+		<wartosc pkt="1413" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="1413" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
 
-        <stezenie id="1" typ="PYL">
-            <!-- pyl -->
-            <wartosc pkt="1210" mnoznik="1.0" />
-            <status pkt="1212" />
-            <srednia okres="48h" zastap="24h" />
-            <przeplyw id="1" mnoznik="0.001"/>
-            <niepewnosc pkt="1248" />
-            <standard id="1" typ="stezenie" korekcja="niepewnosc" />
-            <precyzja srednia="1" emisja="2" />		
-            <prognoza okres="1h" aktualna_pkt="6051" poprzednia_pkt="6058" typ="stezenie" />
-            <prognoza okres="24h" pkt="1217" aktualna_pkt="6052" standard_pkt="6053" typ="stezenie" />
-            <prognoza okres="1M" aktualna_pkt="6054" standard_pkt="6055" typ="stezenie" />
-            <zakres_kalibracji dol_pkt="1244" gora_pkt="1245" />		
-            <wartosc_pomiarowa pkt="1210" />
-        </stezenie>
-        <standard id="1">
-            <!-- standard pylu -->
-            <wartosc pkt="1213" standard="H" typ="24h" mnoznik="1.0" />
-            <wartosc pkt="1213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
-            <precyzja srednia="0" waga="1" />
-        </standard>
-        <stezenie id="8" typ="CO2">
-            <wartosc pkt="1319" mnoznik="1.0" />
-            <status pkt="1312" />
-            <przeplyw id="1" mnoznik="0.001"/>
-            <precyzja srednia="1" emisja="1" />
-            <wartosc_skorygowana pkt="1310" mnoznik="1.0" />
-        </stezenie>
+	<stezenie id="8" typ="CO2">
+		<wartosc pkt="1319" mnoznik="1.0" />
+		<status pkt="1312" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<precyzja srednia="1" emisja="1" />
+		<wartosc_skorygowana pkt="1310" mnoznik="1.0" />
+	</stezenie>
 
 	</emitor>
+
+
+<!-- EMITOR 3 (K2 poprzednio K2K5) -->
+
+
+	<emitor nr="3" typ="pomiarowy" nazwa="K2">
+	<status>
+		<auto pkt="2013" />
+		<reka pkt="2012" />
+	</status>
+	<odniesienie>
+		<wartosc pkt="2054" />
+	</odniesienie>
+	<parametry_referencyjne>
+		<wartosc typ="O2" pkt="2073" />
+		<wartosc typ="H2O" pkt="2093" />
+		<wartosc typ="T" pkt="2113" />
+		<wartosc typ="P" pkt="2133" />
+	</parametry_referencyjne>
+	<parametr id="1" typ="VSS">
+		<!-- przeplyw -->
+		<wartosc pkt="2167" mnoznik="1.0" modyfikacja_archiwum="1" />
+		<status pkt="2162" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_zastepcza pkt="2172" />
+	</parametr>
+	<parametr id="2" typ="VSW">
+		<!-- przeplyw -->
+		<wartosc pkt="2165" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="3" typ="VSR">
+		<!-- przeplyw -->
+		<wartosc pkt="2164" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="4" typ="MOC">
+		<!-- moc -->
+		<wartosc pkt="2050" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="5" typ="O2">
+		<!-- tlen -->
+		<wartosc pkt="2070" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="2073" mnoznik="1.0" />
+	</parametr>
+	<parametr id="6" typ="H2O">
+		<!-- H2O  -->
+		<wartosc pkt="2090" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="2093" mnoznik="1.0" />
+	</parametr>
+	<parametr id="7" typ="T">
+		<!-- Tsp  -->
+		<wartosc pkt="2110" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="2113" mnoznik="1.0" />
+	</parametr>
+	<parametr id="8" typ="P">
+		<!-- Psp  -->
+		<wartosc pkt="2130" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="2133" mnoznik="1.0" />
+	</parametr>
+	<parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="2166" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<stezenie id="1" typ="PYL">
+		<!-- pyl -->
+		<wartosc pkt="2210" mnoznik="1.0" />
+		<status pkt="2212" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2248" />
+		<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="1" emisja="2" />		
+		<prognoza okres="1h" aktualna_pkt="6101" poprzednia_pkt="6108" typ="stezenie" />
+		<prognoza okres="24h" pkt="2217" aktualna_pkt="6102" standard_pkt="6103" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6104" standard_pkt="6105" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="2244" gora_pkt="2245" />		
+		<wartosc_pomiarowa pkt="2210" />
+	</stezenie>
+	<standard id="1">
+		<!-- standard pylu -->
+		<wartosc pkt="2213" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="2" typ="SO2">
+		<!-- SO2 -->
+		<wartosc pkt="2260" mnoznik="1.0" />
+		<status pkt="2262" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2298" />
+		<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6111" poprzednia_pkt="6118" typ="stezenie" />
+		<prognoza okres="24h" pkt="2267" aktualna_pkt="6112" standard_pkt="6113" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6114" standard_pkt="6115" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="2294" gora_pkt="2295" />		
+		<wartosc_pomiarowa pkt="2260" />
+	</stezenie>
+	<standard id="2">
+		<!-- standard SO2 -->
+		<wartosc pkt="2263" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2263" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="3" typ="CO">
+		<!-- CO -->
+		<wartosc pkt="2360" mnoznik="1.0" />
+		<status pkt="2362" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2398" />
+		<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="24h" aktualna_pkt="2367" standard_pkt="2369" typ="stezenie" />
+		<prognoza okres="1h" poprzednia_pkt="6138" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="2394" gora_pkt="2395" />		
+		<wartosc_pomiarowa pkt="2360" />
+	</stezenie>
+	<standard id="3">
+		<!-- standard CO -->
+		<wartosc pkt="2363" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="4" typ="NOX">
+		<!-- NOx -->
+		<wartosc pkt="2410" mnoznik="1.0" />
+		<status pkt="2412" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2448" />
+		<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6121" poprzednia_pkt="6128" typ="stezenie" />
+		<prognoza okres="24h" pkt="2417" aktualna_pkt="6122" standard_pkt="6123" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6124" standard_pkt="6125" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="2444" gora_pkt="2445" />		
+		<wartosc_pomiarowa pkt="2410" />
+	</stezenie>
+	<standard id="4">
+		<!-- standard NOx -->
+		<wartosc pkt="2413" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2413" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="8" typ="CO2">
+		<wartosc pkt="2319" mnoznik="1.0" />
+		<status pkt="2312" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<precyzja srednia="1" emisja="1" />
+		<wartosc_skorygowana pkt="2310" mnoznik="1.0" />
+	</stezenie>
+
+	<stezenie id="9" typ="HCL">
+		<!-- HCL -->
+		<wartosc pkt="2810" mnoznik="1.0" />
+		<status pkt="2812" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2848" />
+		<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="2844" gora_pkt="2845" />		
+		<wartosc_pomiarowa pkt="2810" />
+	</stezenie>
+	<standard id="9">
+		<!-- standard HCL -->
+		<wartosc pkt="2813" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2813" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="10" typ="HF">
+		<!-- HF -->
+		<wartosc pkt="2860" mnoznik="1.0" />
+		<status pkt="2862" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2898" />
+		<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="2894" gora_pkt="2895" />		
+		<wartosc_pomiarowa pkt="2860" />
+	</stezenie>
+	<standard id="10">
+		<!-- standard HF -->
+		<wartosc pkt="2863" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2863" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="11" typ="NH3">
+		<!-- NH3 -->
+		<wartosc pkt="2910" mnoznik="1.0" />
+		<status pkt="2912" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="2949" />
+		<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="2944" gora_pkt="2945" />		
+		<wartosc_pomiarowa pkt="2910" />
+	</stezenie>
+	<standard id="11">
+		<!-- standard NH3 -->
+		<wartosc pkt="2913" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="2913" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	</emitor>
+
+
+<!-- EMITOR 4 (K6) -->
+
+	<emitor nr="4" typ="pomiarowy" nazwa="K6">
+	<status>
+		<auto pkt="3013" />
+		<reka pkt="3012" />
+	</status>
+	<odniesienie>
+		<wartosc pkt="3054" />
+	</odniesienie>
+	<parametry_referencyjne>
+		<wartosc typ="O2" pkt="3073" />
+		<wartosc typ="H2O" pkt="3093" />
+		<wartosc typ="T" pkt="3113" />
+		<wartosc typ="P" pkt="3133" />
+	</parametry_referencyjne>
+	<parametr id="1" typ="VSS" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="3167" mnoznik="1.0" />
+		<status pkt="3162" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_zastepcza pkt="3172" />
+	</parametr>
+	<parametr id="2" typ="VSW">
+		<!-- przeplyw -->
+		<wartosc pkt="3165" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="3" typ="VSR">
+		<!-- przeplyw -->
+		<wartosc pkt="3164" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="4" typ="MOC">
+		<!-- moc -->
+		<wartosc pkt="3050" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="5" typ="O2">
+		<!-- tlen -->
+		<wartosc pkt="3070" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="3073" mnoznik="1.0" />
+	</parametr>
+	<parametr id="6" typ="H2O">
+		<!-- H2O  -->
+		<wartosc pkt="3090" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="3093" mnoznik="1.0" />
+	</parametr>
+	<parametr id="7" typ="T">
+		<!-- Tsp  -->
+		<wartosc pkt="3110" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="3113" mnoznik="1.0" />
+	</parametr>
+	<parametr id="8" typ="P">
+		<!-- Psp  -->
+		<wartosc pkt="3130" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="3133" mnoznik="1.0" />
+	</parametr>
+	<parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="3166" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<stezenie id="1" typ="PYL">
+		<!-- pyl -->
+		<wartosc pkt="3210" mnoznik="1.0" />
+		<status pkt="3212" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="3248" />
+		<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="1" emisja="2" />		
+		<prognoza okres="1h" aktualna_pkt="6151" poprzednia_pkt="6158" typ="stezenie" />
+		<prognoza okres="24h" pkt="3217" aktualna_pkt="6152" standard_pkt="6153" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6154" standard_pkt="6155" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="3244" gora_pkt="3245" />		
+		<wartosc_pomiarowa pkt="3210" />
+	</stezenie>
+	<standard id="1">
+		<!-- standard pylu -->
+		<wartosc pkt="3213" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="3213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="2" typ="SO2">
+		<!-- SO2 -->
+		<wartosc pkt="3260" mnoznik="1.0" />
+		<status pkt="3262" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="3298" />
+		<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6161" poprzednia_pkt="6168" typ="stezenie" />
+		<prognoza okres="24h" pkt="3267" aktualna_pkt="6162" standard_pkt="6163" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6164" standard_pkt="6165" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="3294" gora_pkt="3295" />		
+		<wartosc_pomiarowa pkt="3260" />
+	</stezenie>
+	<standard id="2">
+		<!-- standard SO2 -->
+		<wartosc pkt="3263" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="3263" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="3" typ="CO">
+		<!-- CO -->
+		<wartosc pkt="3360" mnoznik="1.0" />
+		<status pkt="3362" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="3398" />
+		<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="24h" aktualna_pkt="3367" standard_pkt="3369" typ="stezenie" />
+		<prognoza okres="1h" poprzednia_pkt="6188" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="3394" gora_pkt="3395" />		
+		<wartosc_pomiarowa pkt="3360" />
+	</stezenie>
+	<standard id="3">
+		<!-- standard CO -->
+		<wartosc pkt="3363" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="3363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="4" typ="NOX">
+		<!-- NOx -->
+		<wartosc pkt="3410" mnoznik="1.0" />
+		<status pkt="3412" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="3448" />
+		<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6171" poprzednia_pkt="6178" typ="stezenie" />
+		<prognoza okres="24h" pkt="3417" aktualna_pkt="6172" standard_pkt="6173" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6174" standard_pkt="6175" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="3444" gora_pkt="3445" />		
+		<wartosc_pomiarowa pkt="3410" />
+	</stezenie>
+	<standard id="4">
+		<!-- standard NOx -->
+		<wartosc pkt="3413" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="3413" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="8" typ="CO2">
+		<wartosc pkt="3319" mnoznik="1.0" />
+		<status pkt="3312" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<precyzja srednia="1" emisja="1" />
+		<wartosc_skorygowana pkt="3310" mnoznik="1.0" />
+	</stezenie>
+	</emitor>
+
+
+<!-- EMITOR 5 (K7) -->
+
+
+	<emitor nr="5" typ="pomiarowy" nazwa="K7">
+	<status>
+		<auto pkt="4013" />
+		<reka pkt="4012" />
+	</status>
+	<odniesienie>
+		<wartosc pkt="4054" />
+	</odniesienie>
+	<parametry_referencyjne>
+		<wartosc typ="O2" pkt="4073" />
+		<wartosc typ="H2O" pkt="4093" />
+		<wartosc typ="T" pkt="4113" />
+		<wartosc typ="P" pkt="4133" />
+	</parametry_referencyjne>
+	<parametr id="1" typ="VSS">
+		<!-- przeplyw -->
+		<wartosc pkt="4167" mnoznik="1.0" modyfikacja_archiwum="1" />
+		<status pkt="4162" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_zastepcza pkt="1172" />
+	</parametr>
+	<parametr id="2" typ="VSW">
+		<!-- przeplyw -->
+		<wartosc pkt="4165" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="3" typ="VSR">
+		<!-- przeplyw -->
+		<wartosc pkt="4164" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="4" typ="MOC">
+		<!-- moc -->
+		<wartosc pkt="4050" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="5" typ="O2">
+		<!-- tlen -->
+		<wartosc pkt="4070" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="4073" mnoznik="1.0" />
+	</parametr>
+	<parametr id="6" typ="H2O">
+		<!-- H2O  -->
+		<wartosc pkt="4090" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="4093" mnoznik="1.0" />
+	</parametr>
+	<parametr id="7" typ="T">
+		<!-- Tsp  -->
+		<wartosc pkt="4110" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="4113" mnoznik="1.0" />
+	</parametr>
+	<parametr id="8" typ="P">
+		<!-- Psp  -->
+		<wartosc pkt="4130" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="4133" mnoznik="1.0" />
+	</parametr>
+	<parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="4166" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<stezenie id="1" typ="PYL">
+		<!-- pyl -->
+		<wartosc pkt="4210" mnoznik="1.0" />
+		<status pkt="4212" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4248" />
+		<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="1" emisja="2" />		
+		<prognoza okres="1h" aktualna_pkt="6201" poprzednia_pkt="6208" typ="stezenie" />
+		<prognoza okres="24h" pkt="4217" aktualna_pkt="6202" standard_pkt="6203" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6204" standard_pkt="6205" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="4244" gora_pkt="4245" />		
+		<wartosc_pomiarowa pkt="4210" />
+	</stezenie>
+	<standard id="1">
+		<!-- standard pylu -->
+		<wartosc pkt="4213" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="2" typ="SO2">
+		<!-- SO2 -->
+		<wartosc pkt="4260" mnoznik="1.0" />
+		<status pkt="4262" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4298" />
+		<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6211" poprzednia_pkt="6218" typ="stezenie" />
+		<prognoza okres="24h" pkt="4267" aktualna_pkt="6212" standard_pkt="6213" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6214" standard_pkt="6215" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="4294" gora_pkt="4295" />		
+		<wartosc_pomiarowa pkt="4260" />
+	</stezenie>
+	<standard id="2">
+		<!-- standard SO2 -->
+		<wartosc pkt="4263" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4263" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="3" typ="CO">
+		<!-- CO -->
+		<wartosc pkt="4360" mnoznik="1.0" />
+		<status pkt="4362" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4398" />
+		<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="24h" aktualna_pkt="4367" standard_pkt="4369" typ="stezenie" />
+		<prognoza okres="1h" poprzednia_pkt="6238" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="4394" gora_pkt="4395" />		
+		<wartosc_pomiarowa pkt="4360" />
+	</stezenie>
+	<standard id="3">
+		<!-- standard CO -->
+		<wartosc pkt="4363" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="4" typ="NOX">
+		<!-- NOx -->
+		<wartosc pkt="4410" mnoznik="1.0" />
+		<status pkt="4412" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4448" />
+		<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6221" poprzednia_pkt="6228" typ="stezenie" />
+		<prognoza okres="24h" pkt="4417" aktualna_pkt="6222" standard_pkt="6223" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6224" standard_pkt="6225" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="4444" gora_pkt="4445" />		
+		<wartosc_pomiarowa pkt="4410" />
+	</stezenie>
+	<standard id="4">
+		<!-- standard NOx -->
+		<wartosc pkt="4413" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4413" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="8" typ="CO2">
+		<wartosc pkt="4319" mnoznik="1.0" />
+		<status pkt="4312" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<precyzja srednia="1" emisja="1" />
+		<wartosc_skorygowana pkt="4310" mnoznik="1.0" />
+	</stezenie>
+
+	<stezenie id="9" typ="HCL">
+		<!-- HCL -->
+		<wartosc pkt="4810" mnoznik="1.0" />
+		<status pkt="4812" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4848" />
+		<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="4844" gora_pkt="4845" />		
+		<wartosc_pomiarowa pkt="4810" />
+	</stezenie>
+	<standard id="9">
+		<!-- standard HCL -->
+		<wartosc pkt="4813" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4813" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="10" typ="HF">
+		<!-- HF -->
+		<wartosc pkt="4860" mnoznik="1.0" />
+		<status pkt="4862" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4898" />
+		<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="4894" gora_pkt="4895" />		
+		<wartosc_pomiarowa pkt="4860" />
+	</stezenie>
+	<standard id="10">
+		<!-- standard HF -->
+		<wartosc pkt="4863" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4863" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="11" typ="NH3">
+		<!-- NH3 -->
+		<wartosc pkt="4910" mnoznik="1.0" />
+		<status pkt="4912" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="4949" />
+		<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="4944" gora_pkt="4945" />		
+		<wartosc_pomiarowa pkt="4910" />
+	</stezenie>
+	<standard id="11">
+		<!-- standard NH3 -->
+		<wartosc pkt="4913" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="4913" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	</emitor>
+
+
+
+<!-- EMITOR 6 (K34) struktura zastepcza - od 201606 juz nie istanieje -->
+   
+
+<!-- EMITOR 9 (K45) -->
+
+	<emitor nr="9" typ="pomiarowy" nazwa="K4K5">
+	<status>
+		<auto pkt="8013" />
+		<reka pkt="8012" />
+	</status>
+	<odniesienie>
+		<wartosc pkt="8054" />
+	</odniesienie>
+	<parametry_referencyjne>
+		<wartosc typ="O2" pkt="8073" />
+		<wartosc typ="H2O" pkt="8093" />
+		<wartosc typ="T" pkt="8113" />
+		<wartosc typ="P" pkt="8133" />
+	</parametry_referencyjne>
+	<parametr id="1" typ="VSS" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="8167" mnoznik="1.0" />
+		<status pkt="8162" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_zastepcza pkt="8172" />
+	</parametr>
+	<parametr id="2" typ="VSW">
+		<!-- przeplyw -->
+		<wartosc pkt="8165" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="3" typ="VSR">
+		<!-- przeplyw -->
+		<wartosc pkt="8164" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="4" typ="MOC">
+		<!-- moc -->
+		<wartosc pkt="8050" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<parametr id="5" typ="O2">
+		<!-- tlen -->
+		<wartosc pkt="8070" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="8073" mnoznik="1.0" />
+	</parametr>
+	<parametr id="6" typ="H2O">
+		<!-- H2O  -->
+		<wartosc pkt="8090" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+		<wartosc_referencyjna pkt="8093" mnoznik="1.0" />
+	</parametr>
+	<parametr id="7" typ="T">
+		<!-- Tsp  -->
+		<wartosc pkt="8110" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="8113" mnoznik="1.0" />
+	</parametr>
+	<parametr id="8" typ="P">
+		<!-- Psp  -->
+		<wartosc pkt="8130" mnoznik="1.0" />
+		<precyzja srednia="2" suma="1" />
+		<wartosc_referencyjna pkt="8133" mnoznik="1.0" />
+	</parametr>
+	<parametr id="9" typ="VSU" modyfikacja_archiwum="1">
+		<!-- przeplyw -->
+		<wartosc pkt="8166" mnoznik="1.0" />
+		<precyzja srednia="1" suma="1" />
+	</parametr>
+	<stezenie id="1" typ="PYL">
+		<!-- pyl -->
+		<wartosc pkt="8210" mnoznik="1.0" />
+		<status pkt="8212" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8248" />
+		<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="1" emisja="2" />		
+		<prognoza okres="1h" aktualna_pkt="6251" poprzednia_pkt="6258" typ="stezenie" />
+		<prognoza okres="24h" pkt="8217" aktualna_pkt="6252" standard_pkt="6253" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6254" standard_pkt="6255" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="8244" gora_pkt="8245" />		
+		<wartosc_pomiarowa pkt="8210" />
+	</stezenie>
+	<standard id="1">
+		<!-- standard pylu -->
+		<wartosc pkt="8213" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8213" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="2" typ="SO2">
+		<!-- SO2 -->
+		<wartosc pkt="8260" mnoznik="1.0" />
+		<status pkt="8262" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8298" />
+		<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6261" poprzednia_pkt="6268" typ="stezenie" />
+		<prognoza okres="24h" pkt="8267" aktualna_pkt="6262" standard_pkt="6263" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6264" standard_pkt="6265" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="8294" gora_pkt="8295" />		
+		<wartosc_pomiarowa pkt="8260" />
+	</stezenie>
+	<standard id="2">
+		<!-- standard SO2 -->
+		<wartosc pkt="8263" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8263" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="3" typ="CO">
+		<!-- CO -->
+		<wartosc pkt="8360" mnoznik="1.0" />
+		<status pkt="8362" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8398" />
+		<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="24h" aktualna_pkt="8367" standard_pkt="8369" typ="stezenie" />
+		<prognoza okres="1h" poprzednia_pkt="6288" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="8394" gora_pkt="8395" />		
+		<wartosc_pomiarowa pkt="8360" />
+	</stezenie>
+	<standard id="3">
+		<!-- standard CO -->
+		<wartosc pkt="8363" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="4" typ="NOX">
+		<!-- NOx -->
+		<wartosc pkt="8410" mnoznik="1.0" />
+		<status pkt="8412" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8448" />
+		<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="0" emisja="1" />		
+		<prognoza okres="1h" aktualna_pkt="6271" poprzednia_pkt="6278" typ="stezenie" />
+		<prognoza okres="24h" pkt="8417" aktualna_pkt="6272" standard_pkt="6273" typ="stezenie" />
+		<prognoza okres="1M" aktualna_pkt="6274" standard_pkt="6275" typ="stezenie" />
+		<zakres_kalibracji dol_pkt="8444" gora_pkt="8445" />		
+		<wartosc_pomiarowa pkt="8410" />
+	</stezenie>
+	<standard id="4">
+		<!-- standard NOx -->
+		<wartosc pkt="8413" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8413" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	<stezenie id="8" typ="CO2">
+		<wartosc pkt="8319" mnoznik="1.0" />
+		<status pkt="8312" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<precyzja srednia="1" emisja="1" />
+		<wartosc_skorygowana pkt="8310" mnoznik="1.0" />
+	</stezenie>
+
+	<stezenie id="9" typ="HCL">
+		<!-- HCL -->
+		<wartosc pkt="8810" mnoznik="1.0" />
+		<status pkt="8812" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8848" />
+		<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="8844" gora_pkt="8845" />		
+		<wartosc_pomiarowa pkt="8810" />
+	</stezenie>
+	<standard id="9">
+		<!-- standard HCL -->
+		<wartosc pkt="8813" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8813" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="10" typ="HF">
+		<!-- HF -->
+		<wartosc pkt="8860" mnoznik="1.0" />
+		<status pkt="8862" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8898" />
+		<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="8894" gora_pkt="8895" />		
+		<wartosc_pomiarowa pkt="8860" />
+	</stezenie>
+	<standard id="10">
+		<!-- standard HF -->
+		<wartosc pkt="8863" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8863" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+	<stezenie id="11" typ="NH3">
+		<!-- NH3 -->
+		<wartosc pkt="8910" mnoznik="1.0" />
+		<status pkt="8912" />
+		<srednia okres="48h" zastap="24h" />
+		<przeplyw id="1" mnoznik="0.001"/>
+		<niepewnosc pkt="8949" />
+		<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+		<precyzja srednia="2" emisja="3" />		
+		<zakres_kalibracji dol_pkt="8944" gora_pkt="8945" />		
+		<wartosc_pomiarowa pkt="8910" />
+	</stezenie>
+	<standard id="11">
+		<!-- standard NH3 -->
+		<wartosc pkt="8913" standard="H" typ="24h" mnoznik="1.0" />
+		<wartosc pkt="8913" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+		<precyzja srednia="0" waga="1" />
+	</standard>
+
+	</emitor>
+   
+
+<!-- EMITOR 7 (H200) K2 K3 K4K5 K6 -->
+
+	<emitor nr="7" typ="zastepczy" poziom="1" nazwa="H200">
+		<status>
+			<auto pkt="5202"/>
+			<reka pkt="0"/>
+			<skladnik emitor="2"/>
+			<skladnik emitor="3"/>
+			<skladnik emitor="4"/>
+			<skladnik emitor="9"/>
+		</status>
+
+		<parametr id="1" typ="VSS">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5288" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+		<parametr id="3" typ="VSR">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5285" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<parametr id="4" typ="MOC">
+			<!-- moc -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5212" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="5" typ="O2">
+			<!-- tlen -->
+			<skladnik emitor="2" id="5"/>
+			<skladnik emitor="3" id="5"/>
+			<skladnik emitor="4" id="5"/>
+			<skladnik emitor="9" id="5"/>
+			<wartosc pkt="5222" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="6" typ="H2O">
+			<!-- H2O -->
+			<skladnik emitor="2" id="6"/>
+			<skladnik emitor="3" id="6"/>
+			<skladnik emitor="4" id="6"/>
+			<skladnik emitor="9" id="6"/>
+			<wartosc pkt="5232" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="7" typ="T">
+			<!-- T -->
+			<skladnik emitor="2" id="7"/>
+			<skladnik emitor="3" id="7"/>
+			<skladnik emitor="4" id="7"/>
+			<skladnik emitor="9" id="7"/>
+			<wartosc pkt="5242" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="8" typ="P">
+			<!-- P -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="5252" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="9" typ="VSU">
+			<!-- VSU -->
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="5287" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+		<stezenie id="1" typ="PYL">
+			<!-- pyl -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5300" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="1" emisja="2" />
+			<prognoza okres="24h" typ="stezenie" pkt="5305" standard_pkt="5307" />
+		</stezenie>
+		<standard id="1">
+			<!-- standard pylu -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5303" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5303" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+
+		<stezenie id="2" typ="SO2">
+			<!-- SO2 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="5320" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" typ="stezenie" pkt="5325" standard_pkt="5327" />
+		</stezenie>
+		<standard id="2">
+			<!-- standard SO2 -->
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="5323" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5323" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+
+		<stezenie id="3" typ="CO">
+			<!-- CO -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5360" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" typ="stezenie" pkt="5365" />
+		</stezenie>
+		<standard id="3">
+			<!-- standard CO -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5363" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="4" typ="NOX">
+			<!-- NOx -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5380" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" typ="stezenie" pkt="5385" standard_pkt="5387" />
+		</stezenie>
+		<standard id="4">
+			<!-- standard NOx -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5383" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5383" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="8" typ="CO2">
+			<!-- NOx -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="5340" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<precyzja srednia="1" emisja="1" />
+		</stezenie>
+
+	</emitor>
+
+<!-- EMITOR 8 (ec4) -->
+
+	<emitor nr="8" typ="zastepczy" poziom="1" nazwa="EC4">
+		<status>
+			<auto pkt="5402"/>
+			<reka pkt="0"/>
+			<skladnik emitor="2"/>
+			<skladnik emitor="3"/>
+			<skladnik emitor="4"/>
+			<skladnik emitor="5"/>
+			<skladnik emitor="9"/>
+		</status>
+
+		<parametr id="1" typ="VSS">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="5" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5488" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+		<parametr id="3" typ="VSR">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="5" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5485" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<parametr id="4" typ="MOC">
+			<!-- moc -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="5" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5412" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="5" typ="O2">
+			<!-- tlen -->
+			<skladnik emitor="2" id="5"/>
+			<skladnik emitor="3" id="5"/>
+			<skladnik emitor="4" id="5"/>
+			<skladnik emitor="5" id="5"/>
+			<skladnik emitor="9" id="5"/>
+			<wartosc pkt="5422" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="6" typ="H2O">
+			<!-- H2O -->
+			<skladnik emitor="2" id="6"/>
+			<skladnik emitor="3" id="6"/>
+			<skladnik emitor="4" id="6"/>
+			<skladnik emitor="5" id="6"/>
+			<skladnik emitor="9" id="6"/>
+			<wartosc pkt="5432" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="7" typ="T">
+			<!-- T -->
+			<skladnik emitor="2" id="7"/>
+			<skladnik emitor="3" id="7"/>
+			<skladnik emitor="4" id="7"/>
+			<skladnik emitor="5" id="7"/>
+			<skladnik emitor="9" id="7"/>
+			<wartosc pkt="5442" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="8" typ="P">
+			<!-- P -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="5" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="5452" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="9" typ="VSU">
+			<!-- przeplyw VSU -->
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="5" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="5487" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<stezenie id="1" typ="PYL">
+			<!-- pyl -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="5" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5500" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="1" emisja="2" />
+			<prognoza okres="24h" pkt="5505" aktualna_pkt="6302" standard_pkt="6303" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="6304" standard_pkt="6305" typ="stezenie" />
+		</stezenie>
+		<standard id="1">
+			<!-- standard pylu -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="5" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="5503" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5503" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="2" typ="SO2">
+			<!-- SO2 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="5" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="5520" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="5525" aktualna_pkt="6312" standard_pkt="6313" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="6314" standard_pkt="6315" typ="stezenie" />
+		</stezenie>
+		<standard id="2">
+			<!-- standard SO2 -->
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="5" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="5523" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5523" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="3" typ="CO">
+			<!-- CO -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="5" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5560" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza pkt="5565" okres="24h" typ="stezenie" />
+		</stezenie>
+		<standard id="3">
+			<!-- standard CO -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="5" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="5563" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5563" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="4" typ="NOX">
+			<!-- NOx -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="5" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5580" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="5585" aktualna_pkt="6322" standard_pkt="6323" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="6324" standard_pkt="6325" typ="stezenie" />
+		</stezenie>
+		<standard id="4">
+			<!-- standard NOx -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="5" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="5583" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5583" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="8" typ="CO2">
+			<!-- NOx -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="5" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="5540" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<precyzja srednia="1" emisja="1" />
+		</stezenie>
+
+		<stezenie id="9" typ="HCL">
+			<!-- HCL -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="5" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="5526" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="9">
+			<!-- standard HCL -->
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="5" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="5528" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5528" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="10" typ="HF">
+			<!-- HF -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="10"/>
+			<skladnik emitor="3" id="10"/>
+			<skladnik emitor="4" id="10"/>
+			<skladnik emitor="5" id="10"/>
+			<skladnik emitor="9" id="10"/>
+			<wartosc pkt="5546" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="10">
+			<!-- standard HF -->
+			<skladnik emitor="2" id="10"/>
+			<skladnik emitor="3" id="10"/>
+			<skladnik emitor="4" id="10"/>
+			<skladnik emitor="5" id="10"/>
+			<skladnik emitor="9" id="10"/>
+			<wartosc pkt="5548" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5548" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="11" typ="NH3">
+			<!-- NH3 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="11"/>
+			<skladnik emitor="3" id="11"/>
+			<skladnik emitor="4" id="11"/>
+			<skladnik emitor="5" id="11"/>
+			<skladnik emitor="9" id="11"/>
+			<wartosc pkt="4466" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="11">
+			<!-- standard NH3 -->
+			<skladnik emitor="2" id="11"/>
+			<skladnik emitor="3" id="11"/>
+			<skladnik emitor="4" id="11"/>
+			<skladnik emitor="5" id="11"/>
+			<skladnik emitor="9" id="11"/>
+			<wartosc pkt="5568" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="5568" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+	</emitor>
+
+<!-- EMITOR 11 (K23) -->
+
+	<emitor nr="11" typ="zastepczy" poziom="1" nazwa="K23">
+		<status>
+			<auto pkt="9002"/>
+			<reka pkt="0"/>
+			<skladnik emitor="2"/>
+			<skladnik emitor="3"/>
+		</status>
+
+		<parametr id="1" typ="VSS">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<wartosc pkt="9088" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+		<parametr id="3" typ="VSR">
+			<!-- przeplyw -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<wartosc pkt="9085" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<parametr id="4" typ="MOC">
+			<!-- moc -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<wartosc pkt="9012" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="5" typ="O2">
+			<!-- tlen -->
+			<skladnik emitor="2" id="5"/>
+			<skladnik emitor="3" id="5"/>
+			<wartosc pkt="9022" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="6" typ="H2O">
+			<!-- H2O -->
+			<skladnik emitor="2" id="6"/>
+			<skladnik emitor="3" id="6"/>
+			<wartosc pkt="9032" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="7" typ="T">
+			<!-- T -->
+			<skladnik emitor="2" id="7"/>
+			<skladnik emitor="3" id="7"/>
+			<wartosc pkt="9042" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="8" typ="P">
+			<!-- P -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<wartosc pkt="9052" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="9" typ="VSU">
+			<!-- przeplyw VSU -->
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<wartosc pkt="9087" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<stezenie id="1" typ="PYL">
+			<!-- pyl -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<wartosc pkt="9100" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="1" emisja="2" />
+			<prognoza okres="24h" pkt="9105" aktualna_pkt="10002" standard_pkt="10003" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10004" standard_pkt="10005" typ="stezenie" />
+		</stezenie>
+		<standard id="1">
+			<!-- standard pylu -->
+			<skladnik emitor="2" id="1"/>
+			<skladnik emitor="3" id="1"/>
+			<wartosc pkt="9103" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9103" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="2" typ="SO2">
+			<!-- SO2 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<wartosc pkt="9120" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="9125" aktualna_pkt="10012" standard_pkt="10013" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10014" standard_pkt="10015" typ="stezenie" />
+		</stezenie>
+		<standard id="2">
+			<!-- standard SO2 -->
+			<skladnik emitor="2" id="2"/>
+			<skladnik emitor="3" id="2"/>
+			<wartosc pkt="9123" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9123" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="3" typ="CO">
+			<!-- CO -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<wartosc pkt="9160" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza pkt="9165" okres="24h" typ="stezenie" />
+		</stezenie>
+		<standard id="3">
+			<!-- standard CO -->
+			<skladnik emitor="2" id="3"/>
+			<skladnik emitor="3" id="3"/>
+			<wartosc pkt="9163" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9163" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="4" typ="NOX">
+			<!-- NOx -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<wartosc pkt="9180" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="9185" aktualna_pkt="10022" standard_pkt="10023" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10024" standard_pkt="10025" typ="stezenie" />
+		</stezenie>
+		<standard id="4">
+			<!-- standard NOx -->
+			<skladnik emitor="2" id="4"/>
+			<skladnik emitor="3" id="4"/>
+			<wartosc pkt="9183" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9183" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="8" typ="CO2">
+			<!-- NOx -->
+			<skladnik emitor="2" id="8"/>
+			<skladnik emitor="3" id="8"/>
+			<wartosc pkt="9140" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<precyzja srednia="1" emisja="1" />
+		</stezenie>
+
+		<stezenie id="9" typ="HCL">
+			<!-- HCL -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<wartosc pkt="9126" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="9">
+			<!-- standard HCL -->
+			<skladnik emitor="2" id="9"/>
+			<skladnik emitor="3" id="9"/>
+			<wartosc pkt="9128" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9128" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="10" typ="HF">
+			<!-- HF -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="10"/>
+			<skladnik emitor="3" id="10"/>
+			<wartosc pkt="9146" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="10">
+			<!-- standard HF -->
+			<skladnik emitor="2" id="10"/>
+			<skladnik emitor="3" id="10"/>
+			<wartosc pkt="9148" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9148" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="11" typ="NH3">
+			<!-- NH3 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="2" id="11"/>
+			<skladnik emitor="3" id="11"/>
+			<wartosc pkt="4466" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="11">
+			<!-- standard NH3 -->
+			<skladnik emitor="2" id="11"/>
+			<skladnik emitor="3" id="11"/>
+			<wartosc pkt="9168" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9168" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+	</emitor>
+
+<!-- EMITOR 12 (K456) -->
+
+	<emitor nr="12" typ="zastepczy" poziom="1" nazwa="K456">
+		<status>
+			<auto pkt="9202"/>
+			<reka pkt="0"/>
+			<skladnik emitor="4"/>
+			<skladnik emitor="9"/>
+		</status>
+
+		<parametr id="1" typ="VSS">
+			<!-- przeplyw -->
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="9288" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+		<parametr id="3" typ="VSR">
+			<!-- przeplyw -->
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="9285" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<parametr id="4" typ="MOC">
+			<!-- moc -->
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="9212" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+		<parametr id="5" typ="O2">
+			<!-- tlen -->
+			<skladnik emitor="4" id="5"/>
+			<skladnik emitor="9" id="5"/>
+			<wartosc pkt="9222" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="6" typ="H2O">
+			<!-- H2O -->
+			<skladnik emitor="4" id="6"/>
+			<skladnik emitor="9" id="6"/>
+			<wartosc pkt="9232" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="7" typ="T">
+			<!-- T -->
+			<skladnik emitor="4" id="7"/>
+			<skladnik emitor="9" id="7"/>
+			<wartosc pkt="9242" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="8" typ="P">
+			<!-- P -->
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="9252" mnoznik="1.0" />
+			<precyzja srednia="1" suma="1" />
+		</parametr>
+
+		<parametr id="9" typ="VSU">
+			<!-- przeplyw VSU -->
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="9287" mnoznik="1.0"/>
+			<status pkt="0"/>
+		</parametr>
+
+		<stezenie id="1" typ="PYL">
+			<!-- pyl -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="9300" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="1" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="1" emisja="2" />
+			<prognoza okres="24h" pkt="9305" aktualna_pkt="10052" standard_pkt="10053" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10054" standard_pkt="10055" typ="stezenie" />
+		</stezenie>
+		<standard id="1">
+			<!-- standard pylu -->
+			<skladnik emitor="4" id="1"/>
+			<skladnik emitor="9" id="1"/>
+			<wartosc pkt="9303" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9303" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="2" typ="SO2">
+			<!-- SO2 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="9320" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="2" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="9325" aktualna_pkt="10062" standard_pkt="10063" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10064" standard_pkt="10065" typ="stezenie" />
+		</stezenie>
+		<standard id="2">
+			<!-- standard SO2 -->
+			<skladnik emitor="4" id="2"/>
+			<skladnik emitor="9" id="2"/>
+			<wartosc pkt="9323" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9323" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="3" typ="CO">
+			<!-- CO -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="9360" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="3" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza pkt="9365" okres="24h" typ="stezenie" />
+		</stezenie>
+		<standard id="3">
+			<!-- standard CO -->
+			<skladnik emitor="4" id="3"/>
+			<skladnik emitor="9" id="3"/>
+			<wartosc pkt="9363" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9363" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="4" typ="NOX">
+			<!-- NOx -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="9380" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="4" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="0" emisja="1" />
+			<prognoza okres="24h" pkt="9385" aktualna_pkt="10072" standard_pkt="10073" typ="stezenie" />
+			<prognoza okres="1M" aktualna_pkt="10074" standard_pkt="10075" typ="stezenie" />
+		</stezenie>
+		<standard id="4">
+			<!-- standard NOx -->
+			<skladnik emitor="4" id="4"/>
+			<skladnik emitor="9" id="4"/>
+			<wartosc pkt="9383" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9383" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="8" typ="CO2">
+			<!-- NOx -->
+			<skladnik emitor="4" id="8"/>
+			<skladnik emitor="9" id="8"/>
+			<wartosc pkt="9340" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<precyzja srednia="1" emisja="1" />
+		</stezenie>
+
+		<stezenie id="9" typ="HCL">
+			<!-- HCL -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="9326" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="9" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="9">
+			<!-- standard HCL -->
+			<skladnik emitor="4" id="9"/>
+			<skladnik emitor="9" id="9"/>
+			<wartosc pkt="9328" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9328" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="10" typ="HF">
+			<!-- HF -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="10"/>
+			<skladnik emitor="9" id="10"/>
+			<wartosc pkt="9346" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="10" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="10">
+			<!-- standard HF -->
+			<skladnik emitor="4" id="10"/>
+			<skladnik emitor="9" id="10"/>
+			<wartosc pkt="9348" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9348" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+
+		<stezenie id="11" typ="NH3">
+			<!-- NH3 -->
+			<srednia okres="48h" zastap="24h" />
+			<skladnik emitor="4" id="11"/>
+			<skladnik emitor="9" id="11"/>
+			<wartosc pkt="4466" mnoznik="1.0" />
+			<status pkt="0" />
+			<przeplyw id="1" mnoznik="0.001"/>
+			<standard id="11" typ="stezenie" korekcja="niepewnosc" />
+			<precyzja srednia="2" emisja="3" />
+		</stezenie>
+		<standard id="11">
+			<!-- standard NH3 -->
+			<skladnik emitor="4" id="11"/>
+			<skladnik emitor="9" id="11"/>
+			<wartosc pkt="9368" standard="H" typ="24h" mnoznik="1.0" />
+			<wartosc pkt="9368" standard="A" typ="1h" mnoznik="2.0" okres="rok" ilosc="5%" />
+			<precyzja srednia="0" waga="1" />
+		</standard>
+	</emitor>
+
 </mikros>
