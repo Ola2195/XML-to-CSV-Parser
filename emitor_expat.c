@@ -1,3 +1,18 @@
+/*
+ * File:        emitor_expat.c
+ * Author:      Aleksandra Matysik
+ * Date:        2024-10-01
+ * Description: A program that parses an XML file and converts the relevant data
+ *              into CSV format. It uses the Expat library for XML parsing.
+ *
+ * Usage:       Compile the program using gcc and link it with the Expat library:
+ *              gcc -o emitor_expat emitor_expat.c -lexpat
+ *              
+ *              The program reads an input XML file "example.xml" and outputs
+ *              the results in a CSV file "wyniki.csv" in the specified format.
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
