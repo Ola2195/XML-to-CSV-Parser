@@ -1,12 +1,12 @@
 # XML to CSV Parser
 
-This program parses an XML file and extracts specific data, saving the results in a CSV format. The data parsed includes various parameters related to an "emitor", such as status, values, and concentration.
+This program parses an XML file and converts specific data into CSV format. It processes data related to an "emitor" and its associated tags such as status, values, and concentrations, storing the results in a CSV file. The program uses the **Expat** library for efficient XML parsing.
 
 ## Features
 
-- Reads an XML file and extracts data related to the "emitor", "status", and other relevant tags.
-- Outputs extracted data to a CSV file with a specified format.
-- Uses the Expat library for efficient XML parsing.
+- **XML Parsing**: Extracts data related to "emitor", "status", "parametr", and "stezenie" tags.
+- **CSV Output**: Saves parsed data in a CSV file with a formatted timestamp, including emitter tags and their associated values.
+- **Expat Library**: Utilizes Expat, a fast and non-validating XML parser, for efficient handling of large XML files.
 
 ## Requirements
 
@@ -20,35 +20,48 @@ This program parses an XML file and extracts specific data, saving the results i
 - **example.xml**: Input XML file containing the data to be parsed.
 - **wyniki.csv**: Output CSV file where the parsed data will be saved.
 
+## Compilation
+
+To compile the program, use the following command:
+
+```bash
+gcc -o expat_example emitor_expat.c -lexpat
+```
+
+Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
+
 ## Usage
 
-1. Compile the program using the following command:
-   
-     ```bash
-     gcc -o expat_example expat_example.c -lexpat
-     ```
-     
-3. Place your XML data in the `example.xml` file.
-4. Run the program:
+1. Place your XML data in a file named `example.xml` in the same directory as the compiled program.
+2. Run the program:
 
    ```bash
    ./expat_example
    ```
 
-5. The output will be saved to `wyniki.csv` in the same directory.
+3. The program will generate a CSV file named `wyniki.csv` in the current directory. The CSV will include a timestamp and data from the XML file in the following format:
 
-## Output Format
+   ```
+   "YYYY-MM-DD","Hour","Emitor.Tags","Pkt_Value"
+   ```
 
-The CSV output will have the following format:
+## Example
 
-```
-"YYYY-MM-DD","Hour","Emitor.Tags","Pkt_Value"
-```
-
-For example:
+For instance, after processing `example.xml`, the `wyniki.csv` file might contain:
 
 ```
 "2024-10-01","10","K3.status.reka","1012"
 "2024-10-01","10","K3.parametr.VSS.wartosc","1167"
 "2024-10-01","10","K3.stezenie.CO2.wartosc","1319"
 ```
+
+## Troubleshooting
+
+- **Compilation Issues**: Ensure the Expat development libraries are installed. On Linux, use the provided package manager commands. If you're using macOS or another platform, make sure the appropriate headers are available.
+  
+- **File Errors**: If the program reports an error opening the XML file (`example.xml`), check the file's location and ensure it's in the same directory as the executable.
+
+## Notes
+
+- The program assumes that the input XML file follows a specific structure where "emitor" elements contain tags and values. Ensure the XML file is correctly formatted for successful parsing.
+- The buffer size for tags and values is limited to avoid overflow, so consider adjusting `ELEMENTS`, `MAX_TAG`, and `STR_SIZE` in the source code if working with larger datasets.
