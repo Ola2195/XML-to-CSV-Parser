@@ -24,7 +24,7 @@ This program parses an XML file and converts specific data into CSV format. It p
 
 To compile the program, use the following command:
 
-```bash
+```console
 gcc -o expat_example emitor_expat.c -lexpat
 ```
 
@@ -35,13 +35,13 @@ Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
 1. Place your XML data in a file named `example.xml` in the same directory as the compiled program.
 2. Run the program:
 
-   ```bash
+   ```console
    ./expat_example
    ```
 
 3. The program will generate a CSV file named `wyniki.csv` in the current directory. The CSV will include a timestamp and data from the XML file in the following format:
 
-   ```
+   ```csv
    "YYYY-MM-DD","Hour","Emitor.Tags","Pkt_Value"
    ```
 
@@ -49,7 +49,7 @@ Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
 
 For instance, after processing `example.xml`, the `wyniki.csv` file might contain:
 
-```
+```csv
 "2024-10-01","10","K3.status.reka","1012"
 "2024-10-01","10","K3.parametr.VSS.wartosc","1167"
 "2024-10-01","10","K3.stezenie.CO2.wartosc","1319"
