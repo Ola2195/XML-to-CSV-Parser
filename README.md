@@ -65,5 +65,5 @@ For instance, after processing `example.xml`, the `wyniki.csv` file might contai
 
 - The program assumes that the input XML file follows a specific structure where "emitor" elements contain tags and values. Ensure the XML file is correctly formatted for successful parsing.
 - The program dynamically allocates memory for storing tags and buffers, ensuring efficient handling of XML files with varying tag structures and data points.
-**Tag Management**: Tags are allocated in blocks (defined by `ADD_TAG`), and the memory is expanded as more tags are encountered.
-**Buffer Management**: Buffers for CSV output are allocated dynamically in blocks (defined by `ADD_BUFFOR`), ensuring efficient memory use and avoiding overflow.
+   - **Tag Management**: Tags are allocated in blocks (defined by `ADD_TAG`), and the memory is expanded as more tags are encountered.
+   - **Buffer Management**: Buffers for CSV output are allocated dynamically in blocks (defined by `ADD_BUFFOR`), ensuring efficient memory use and avoiding overflow.
