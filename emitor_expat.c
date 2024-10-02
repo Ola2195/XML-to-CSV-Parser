@@ -20,25 +20,111 @@
 
 #define INPUT_FILENAME "example.xml"
 #define OUTPUT_FILENAME "wyniki.csv"
-#define MAX_TAG 5       // Maximum number of tags associated with one emitter
 
-#define STR_SIZE 15     // Maximum length of strings for emitter names, tags, and values
-#define ADD_BUFFOR 5    // Number of additional buffers to allocate when more space is needed
+#define STR_SIZE 15  // Maximum length of strings for emitter names, tags, and values
+#define ADD_TAG 5    // Number of additional tags to allocate when more space is needed
+#define ADD_BUFFOR 5 // Number of additional buffers to allocate when more space is needed
 
 /*
  * Structure to store parsed data from the XML file.
+ * It includes:
+ * - emitter name,
+ * - dynamically allocated array of tags,
+ * - value associated with the current element.
  */
 typedef struct
 {
     char emitor[STR_SIZE];
+    char **tags;
     int n_tags;
-    char tags[MAX_TAG][STR_SIZE];
+    int allocated_tags;
     char value[STR_SIZE];
 } Data;
 
-char **dataBuffers = NULL;        // Dynamic array to hold pointers to data buffers
-int n_buff = 0;                   // Number of buffers currently in use
-int allocated_buffers = 0;        // Total number of buffers allocated
+char **dataBuffers = NULL; // Dynamic array to hold pointers to data buffers
+int n_buff = 0;            // Number of buffers currently in use
+int allocated_buffers = 0; // Total number of buffers allocated
+
+/**
+ * @brief   Initializes the Data structure, allocating memory for the tags.
+ *
+ * The function sets the initial number of tags to zero and allocates memory for
+ * the array of tags based on a pre-defined number of tags (ADD_TAG).
+ *
+ * @param data  A pointer to the Data structure to be initialized.
+ */
+void initData(Data *data)
+{
+    data->n_tags = 0;
+    data->allocated_tags = ADD_TAG;
+    data->tags = malloc(data->allocated_tags * sizeof(char *));
+    if (!data->tags)
+    {
+        perror("Błąd alokacji pamięci dla tagów!");
+        exit(EXIT_FAILURE);
+    }
+}
+
+/**
+ * @brief   Reallocates memory for tags in the Data structure when needed.
+ *
+ * The function checks if the number of stored tags has reached the allocated limit.
+ * If so, it increases the memory allocation for the tags array to accommodate more tags.
+ *
+ * @param data  A pointer to the Data structure where tags are stored.
+ */
+void reallocTags(Data *data)
+{
+    if (data->n_tags >= data->allocated_tags)
+    {
+        data->allocated_tags += ADD_TAG;
+        data->tags = realloc(data->tags, data->allocated_tags * sizeof(char *));
+        if (!data->tags)
+        {
+            perror("Błąd alokacji pamięci dla tagów!");
+            exit(EXIT_FAILURE);
+        }
+    }
+}
+
+/**
+ * @brief   Adds a new tag to the Data structure.
+ *
+ * The function dynamically allocates memory for a new tag and copies the given tag string
+ * into the Data structure's tag array. It reallocates memory if needed.
+ *
+ * @param data  A pointer to the Data structure where the tag will be added.
+ * @param tag   A string representing the tag to be added.
+ */
+void addTag(Data *data, const char *tag)
+{
+    reallocTags(data);
+    data->tags[data->n_tags] = malloc((strlen(tag) + 1) * sizeof(char));
+    if (!data->tags[data->n_tags])
+    {
+        perror("Błąd alokacji pamięci dla pojedynczego tagu!");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(data->tags[data->n_tags], tag);
+    data->n_tags++;
+}
+
+/**
+ * @brief   Frees the dynamically allocated memory for the tags in the Data structure.
+ *
+ * This function releases the memory for each tag in the Data structure and then
+ * frees the memory allocated for the tags array itself.
+ *
+ * @param data  A pointer to the Data structure whose tags are to be freed.
+ */
+void freeTags(Data *data)
+{
+    for (int i = 0; i < data->n_tags; i++)
+    {
+        free(data->tags[i]);
+    }
+    free(data->tags);
+}
 
 /**
  * @brief   Allocates or expands the memory for data buffers.
@@ -47,7 +133,7 @@ int allocated_buffers = 0;        // Total number of buffers allocated
  * If not, it allocates more memory for additional buffers.
  * The allocation happens in blocks defined by ADD_BUFFOR to optimize performance.
  */
-void alocateBuffers(void)
+void relocateBuffers(void)
 {
     if (n_buff >= allocated_buffers)
     {
@@ -124,31 +210,10 @@ void saveOneElement(Data *data)
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    alocateBuffers();
+    relocateBuffers();
 
     saveData(&tm, data, dataBuffers[n_buff]);
     n_buff++;
-}
-
-/**
- * @brief   Adds a tag to the Data struct, checking for the maximum allowed tags.
- *
- * The function appends a tag to the tags array in the Data struct if there is space available.
- *
- * @param data  A pointer to the Data struct where the tag will be added.
- * @param tag   A string representing the tag to be added.
- */
-void addTag(Data *data, const char *tag)
-{
-    if (data->n_tags < MAX_TAG - 1)
-    {
-        strcpy(data->tags[data->n_tags], tag);
-        data->n_tags++;
-    }
-    else
-    {
-        fprintf(stderr, "Przekroczono limit tagów!\n");
-    }
 }
 
 /**
@@ -239,7 +304,8 @@ void XMLCALL characterData(void *userData, const XML_Char *s, int len)
 
 int main()
 {
-    Data data;  // Initialize the data structure to store parsed information
+    Data data;
+    initData(&data); // Initialize the data structure to store parsed information
 
     /*
      * Support for external XML and CSV files.
@@ -308,6 +374,7 @@ int main()
     }
 
     freeBuffers();
+    freeTags(&data);
 
     fclose(inputFile);
     fclose(outputFile);
