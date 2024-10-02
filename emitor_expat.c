@@ -20,10 +20,10 @@
 
 #define INPUT_FILENAME "example.xml"
 #define OUTPUT_FILENAME "wyniki.csv"
-#define ELEMENTS 30     // Maximum number of data elements that can be stored in the buffer
 #define MAX_TAG 5       // Maximum number of tags associated with one emitter
 
 #define STR_SIZE 15     // Maximum length of strings for emitter names, tags, and values
+#define ADD_BUFFOR 5    // Number of additional buffers to allocate when more space is needed
 
 /*
  * Structure to store parsed data from the XML file.
@@ -36,12 +36,55 @@ typedef struct
     char value[STR_SIZE];
 } Data;
 
-/*
- * Array to store formatted data entries in CSV format, before writing to a file.
- * Each entry is stored as a string.
+char **dataBuffers = NULL;        // Dynamic array to hold pointers to data buffers
+int n_buff = 0;                   // Number of buffers currently in use
+int allocated_buffers = 0;        // Total number of buffers allocated
+
+/**
+ * @brief   Allocates or expands the memory for data buffers.
+ *
+ * This function checks if there is enough allocated space for new data.
+ * If not, it allocates more memory for additional buffers.
+ * The allocation happens in blocks defined by ADD_BUFFOR to optimize performance.
  */
-char dataBuffers[ELEMENTS][1024];
-int n_buff = 0;     // Counter for the number of elements stored in the buffer
+void alocateBuffers(void)
+{
+    if (n_buff >= allocated_buffers)
+    {
+        allocated_buffers += ADD_BUFFOR;
+        dataBuffers = realloc(dataBuffers, allocated_buffers * sizeof(char *));
+        if (!dataBuffers)
+        {
+            perror("Błąd alokacji pamięci!");
+            exit(EXIT_FAILURE);
+        }
+
+        for (int i = n_buff; i < allocated_buffers; i++)
+        {
+            dataBuffers[i] = malloc(1024 * sizeof(char));
+            if (!dataBuffers[i])
+            {
+                perror("Błąd alokacji pamięci dla bufora!");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+}
+
+/**
+ * @brief   Frees all dynamically allocated memory for data buffers.
+ *
+ * This function iterates through the allocated buffers and frees each one,
+ * then frees the array holding the buffer pointers.
+ */
+void freeBuffers(void)
+{
+    for (int i = 0; i < allocated_buffers; i++)
+    {
+        free(dataBuffers[i]);
+    }
+    free(dataBuffers);
+}
 
 /**
  * @brief   Formats and saves the collected data into CSV format.
@@ -81,15 +124,10 @@ void saveOneElement(Data *data)
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
+    alocateBuffers();
+
     saveData(&tm, data, dataBuffers[n_buff]);
-    if (n_buff < ELEMENTS - 1)
-    {
-        n_buff++;
-    }
-    else
-    {
-        fprintf(stderr, "Przekroczono limit bufforów!");
-    }
+    n_buff++;
 }
 
 /**
@@ -196,7 +234,7 @@ void XMLCALL endElement(void *userData, const char *name)
  */
 void XMLCALL characterData(void *userData, const XML_Char *s, int len)
 {
-    // TODO
+    // TODO: Implementation for handling character data in XML elements
 }
 
 int main()
@@ -268,6 +306,8 @@ int main()
             n_buff = 0;
         }
     }
+
+    freeBuffers();
 
     fclose(inputFile);
     fclose(outputFile);
