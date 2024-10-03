@@ -56,12 +56,8 @@ typedef struct
  * - dynamically allocated buffer to store multiple entries,
  * - buffer management details like the number of buffers and their allocated size.
  */
-<<<<<<< HEAD
 typedef struct
 {
-=======
-typedef struct {
->>>>>>> ccce22fbde779377b6f3bc9bac57f4b079174063
     Data *data;
     char **dataBuffers;
     int nBuff;
@@ -70,11 +66,7 @@ typedef struct {
 
 /**
  * @brief   Checks if a given string is present in an array.
-<<<<<<< HEAD
  *
-=======
- * 
->>>>>>> ccce22fbde779377b6f3bc9bac57f4b079174063
  * @param val       Pointer to the string to be checked.
  * @param array     A pointer to the array to be searched.
  * @param arraySize The size of the array.
@@ -186,10 +178,6 @@ void initParserContext(ParserContext *context, Data *data)
     context->allocatedBuffers = 0;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ccce22fbde779377b6f3bc9bac57f4b079174063
 /**
  * @brief   Adds a new tag to the Data structure.
  *
@@ -415,11 +403,7 @@ int main(int argc, char *argv[])
         {
             for (int i = 0; i < context.nBuff; i++)
             {
-<<<<<<< HEAD
                 printf(verboseFlag ? "%s" : "", context.dataBuffers[i]);
-=======
-                printf("%s", context.dataBuffers[i]);
->>>>>>> ccce22fbde779377b6f3bc9bac57f4b079174063
                 if (fprintf(outputFile, "%s", context.dataBuffers[i]) < 0)
                 {
                     fprintf(stderr, "Błąd podczas zapisu do pliku wynikowego.\n");
