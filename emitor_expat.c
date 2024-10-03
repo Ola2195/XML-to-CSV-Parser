@@ -21,9 +21,9 @@
 #define INPUT_FILENAME "example.xml"
 #define OUTPUT_FILENAME "wyniki.csv"
 
-#define STR_SIZE 15  // Maximum length of strings for emitter names, tags, and values
-#define ADD_TAG 5    // Number of additional tags to allocate when more space is needed
-#define ADD_BUFFOR 5 // Number of additional buffers to allocate when more space is needed
+#define STR_SIZE    15  // Maximum length of strings for emitter names, tags, and values
+#define ADD_TAG     5   // Number of additional tags to allocate when more space is needed
+#define ADD_BUFFOR  5   // Number of additional buffers to allocate when more space is needed
 
 /*
  * Structure to store parsed data from the XML file.
@@ -36,14 +36,98 @@ typedef struct
 {
     char emitor[STR_SIZE];
     char **tags;
-    int n_tags;
-    int allocated_tags;
+    int nTags;
+    int allocatedTags;
     char value[STR_SIZE];
 } Data;
 
 char **dataBuffers = NULL; // Dynamic array to hold pointers to data buffers
-int n_buff = 0;            // Number of buffers currently in use
-int allocated_buffers = 0; // Total number of buffers allocated
+int nBuff = 0;             // Number of buffers currently in use
+int allocatedBuffers = 0;  // Total number of buffers allocated
+
+/**
+ * @brief   Checks if a given string is present in a predefined array of tag names.
+
+ * @param val   Pointer to the string to be checked.
+ * @return  Returns 1 if the value is found in the array, otherwise 0.
+ */
+int valueInArray(const char *val)
+{
+    const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
+
+    int arraySize = sizeof(tagNames) / sizeof(tagNames[0]);
+    for (int i = 0; i < arraySize; i++)
+    {
+        if (!strcmp(tagNames[i], val))
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+/**
+ * @brief   Reallocates memory for a dynamic array when needed.
+ *
+ * This function checks if more memory is required and reallocates memory in chunks,
+ * based on the provided increment size.
+ *
+ * @param array          A pointer to the array that needs to be resized.
+ * @param currentSize    The current number of elements in the array.
+ * @param allocatedSize  A pointer to the current allocated size (it will be updated).
+ * @param increment      The number of elements to add during reallocation.
+ * @param elementSize    The size of each element in the array.
+ * @return  A pointer to the newly reallocated array.
+ */
+void *relocateMemmory(void *array, int currentSize, int *allocatedSize, int increment, size_t elementSize)
+{
+    if (currentSize >= *allocatedSize)
+    {
+        *allocatedSize += increment;
+        array = realloc(array, *allocatedSize * elementSize);
+        if (!array)
+        {
+            perror("Błąd relokacji pamięci!");
+            exit(EXIT_FAILURE);
+        }
+    }
+    return array;
+}
+
+/**
+ * @brief   Allocates new memory for a dynamic array when needed.
+ *
+ * @param array          A pointer to the array that needs to be sized.
+ * @param sizeToAllocate The number of elements to add during allocation.
+ * @param elementSize    The size of each element in the array.
+ * @return  A pointer to the allocated array.
+ */
+void *alocateNewMemmory(void *array, int sizeToAllocate, size_t elementSize)
+{
+    array = malloc(sizeToAllocate * elementSize);
+    if (!array)
+    {
+        perror("Błąd alokacji pamięci!");
+        exit(EXIT_FAILURE);
+    }
+    return array;
+}
+
+/**
+ * @brief   Frees the dynamically allocated memory for an array of strings.
+ *
+ * @param array   A pointer to the array of strings to be freed.
+ * @param size    The number of elements (strings) in the array.
+ */
+void freeMemmory(char **array, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        free(array);
+    }
+    free(array);
+}
 
 /**
  * @brief   Initializes the Data structure, allocating memory for the tags.
@@ -55,36 +139,9 @@ int allocated_buffers = 0; // Total number of buffers allocated
  */
 void initData(Data *data)
 {
-    data->n_tags = 0;
-    data->allocated_tags = ADD_TAG;
-    data->tags = malloc(data->allocated_tags * sizeof(char *));
-    if (!data->tags)
-    {
-        perror("Błąd alokacji pamięci dla tagów!");
-        exit(EXIT_FAILURE);
-    }
-}
-
-/**
- * @brief   Reallocates memory for tags in the Data structure when needed.
- *
- * The function checks if the number of stored tags has reached the allocated limit.
- * If so, it increases the memory allocation for the tags array to accommodate more tags.
- *
- * @param data  A pointer to the Data structure where tags are stored.
- */
-void reallocTags(Data *data)
-{
-    if (data->n_tags >= data->allocated_tags)
-    {
-        data->allocated_tags += ADD_TAG;
-        data->tags = realloc(data->tags, data->allocated_tags * sizeof(char *));
-        if (!data->tags)
-        {
-            perror("Błąd alokacji pamięci dla tagów!");
-            exit(EXIT_FAILURE);
-        }
-    }
+    data->nTags = 0;
+    data->allocatedTags = ADD_TAG;
+    data->tags = alocateNewMemmory(data->tags, data->allocatedTags, sizeof(char *));
 }
 
 /**
@@ -98,78 +155,10 @@ void reallocTags(Data *data)
  */
 void addTag(Data *data, const char *tag)
 {
-    reallocTags(data);
-    data->tags[data->n_tags] = malloc((strlen(tag) + 1) * sizeof(char));
-    if (!data->tags[data->n_tags])
-    {
-        perror("Błąd alokacji pamięci dla pojedynczego tagu!");
-        exit(EXIT_FAILURE);
-    }
-    strcpy(data->tags[data->n_tags], tag);
-    data->n_tags++;
-}
-
-/**
- * @brief   Frees the dynamically allocated memory for the tags in the Data structure.
- *
- * This function releases the memory for each tag in the Data structure and then
- * frees the memory allocated for the tags array itself.
- *
- * @param data  A pointer to the Data structure whose tags are to be freed.
- */
-void freeTags(Data *data)
-{
-    for (int i = 0; i < data->n_tags; i++)
-    {
-        free(data->tags[i]);
-    }
-    free(data->tags);
-}
-
-/**
- * @brief   Allocates or expands the memory for data buffers.
- *
- * This function checks if there is enough allocated space for new data.
- * If not, it allocates more memory for additional buffers.
- * The allocation happens in blocks defined by ADD_BUFFOR to optimize performance.
- */
-void relocateBuffers(void)
-{
-    if (n_buff >= allocated_buffers)
-    {
-        allocated_buffers += ADD_BUFFOR;
-        dataBuffers = realloc(dataBuffers, allocated_buffers * sizeof(char *));
-        if (!dataBuffers)
-        {
-            perror("Błąd alokacji pamięci!");
-            exit(EXIT_FAILURE);
-        }
-
-        for (int i = n_buff; i < allocated_buffers; i++)
-        {
-            dataBuffers[i] = malloc(1024 * sizeof(char));
-            if (!dataBuffers[i])
-            {
-                perror("Błąd alokacji pamięci dla bufora!");
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-}
-
-/**
- * @brief   Frees all dynamically allocated memory for data buffers.
- *
- * This function iterates through the allocated buffers and frees each one,
- * then frees the array holding the buffer pointers.
- */
-void freeBuffers(void)
-{
-    for (int i = 0; i < allocated_buffers; i++)
-    {
-        free(dataBuffers[i]);
-    }
-    free(dataBuffers);
+    relocateMemmory(data->tags, data->nTags, &data->allocatedTags, ADD_TAG, sizeof(char *));
+    data->tags[data->nTags] = alocateNewMemmory(data->tags[data->nTags], (strlen(tag) + 1), sizeof(char));
+    strcpy(data->tags[data->nTags], tag);
+    data->nTags++;
 }
 
 /**
@@ -187,7 +176,7 @@ void saveData(struct tm *tm, Data *data, char *str)
     char oneTag[300];
 
     strcpy(oneTag, data->emitor);
-    for (int i = 0; i < data->n_tags; i++)
+    for (int i = 0; i < data->nTags; i++)
     {
         strcat(oneTag, ".");
         strcat(oneTag, data->tags[i]);
@@ -210,10 +199,15 @@ void saveOneElement(Data *data)
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    relocateBuffers();
+    dataBuffers = relocateMemmory(dataBuffers, nBuff, &allocatedBuffers, ADD_BUFFOR, sizeof(char *));
 
-    saveData(&tm, data, dataBuffers[n_buff]);
-    n_buff++;
+    for (int i = nBuff; i < allocatedBuffers; i++)
+    {
+        dataBuffers[i] = alocateNewMemmory(dataBuffers[i], 1024, sizeof(char));
+    }
+
+    saveData(&tm, data, dataBuffers[nBuff]);
+    nBuff++;
 }
 
 /**
@@ -241,9 +235,9 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
             }
         }
     }
-    else if (!strcmp(name, "status") || !strcmp(name, "parametr") || !strcmp(name, "stezenie"))
+    else if (data->nTags == 0 && (!strcmp(name, "status") || !strcmp(name, "parametr") || !strcmp(name, "stezenie")))
     {
-        data->n_tags = 0;
+        data->nTags = 0;
         addTag(data, name);
 
         for (int i = 0; attr[i]; i += 2)
@@ -255,7 +249,7 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
             }
         }
     }
-    else if (data->n_tags != 0 && (!strcmp(name, "wartosc") || !strcmp(name, "auto") || !strcmp(name, "reka")))
+    else if (data->nTags != 0 && valueInArray(name))
     {
         addTag(data, name);
         for (int i = 0; attr[i]; i += 2)
@@ -281,9 +275,9 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
 void XMLCALL endElement(void *userData, const char *name)
 {
     Data *data = (Data *)userData;
-    if (data->n_tags > 0)
+    if (data->nTags > 0)
     {
-        data->n_tags--;
+        data->nTags--;
     }
 }
 
@@ -357,7 +351,7 @@ int main()
         }
         else
         {
-            for (int i = 0; i < n_buff; i++)
+            for (int i = 0; i < nBuff; i++)
             {
                 printf("%s", dataBuffers[i]);
                 if (fprintf(outputFile, "%s", dataBuffers[i]) < 0)
@@ -369,12 +363,12 @@ int main()
                     return EXIT_FAILURE;
                 }
             }
-            n_buff = 0;
+            nBuff = 0;
         }
     }
 
-    freeBuffers();
-    freeTags(&data);
+    freeMemmory(dataBuffers, nBuff);
+    freeMemmory(data.tags, data.nTags);
 
     fclose(inputFile);
     fclose(outputFile);
