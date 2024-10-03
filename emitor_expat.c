@@ -43,13 +43,22 @@ typedef struct
     char value[STR_SIZE];
 } Data;
 
-char **dataBuffers = NULL; // Dynamic array to hold pointers to data buffers
-int nBuff = 0;             // Number of buffers currently in use
-int allocatedBuffers = 0;  // Total number of buffers allocated
+/*
+ * Structure to store the parser context, including:
+ * - pointer to a Data structure for current XML element data,
+ * - dynamically allocated buffer to store multiple entries,
+ * - buffer management details like the number of buffers and their allocated size.
+ */
+typedef struct {
+    Data *data;
+    char **dataBuffers;
+    int nBuff;
+    int allocatedBuffers;
+} ParserContext;
 
 /**
  * @brief   Checks if a given string is present in an array.
-
+ * 
  * @param val       Pointer to the string to be checked.
  * @param array     A pointer to the array to be searched.
  * @param arraySize The size of the array.
@@ -145,6 +154,24 @@ void initData(Data *data)
 }
 
 /**
+ * @brief   Initializes the ParserContext structure, linking it to the Data structure.
+ *
+ * The function sets initial values for buffer management, including setting the
+ * initial number of buffers to zero.
+ *
+ * @param context  A pointer to the ParserContext structure to be initialized.
+ * @param data     A pointer to the Data structure for the current XML data.
+ */
+void initParserContext(ParserContext *context, Data *data)
+{
+    context->data = data;
+    context->dataBuffers = NULL;
+    context->nBuff = 0;
+    context->allocatedBuffers = 0;
+}
+
+
+/**
  * @brief   Adds a new tag to the Data structure.
  *
  * The function dynamically allocates memory for a new tag and copies the given tag string
@@ -192,22 +219,22 @@ void saveData(struct tm *tm, Data *data, char *str)
  * The function retrieves the current system time, formats the data using saveData(),
  * and increments the buffer counter for storing the next entry.
  *
- * @param data  A pointer to the Data struct containing parsed XML data to be saved.
+ * @param context  A pointer to the ParserContext struct containing buffers with content and parsed XML data to be saved.
  */
-void saveOneElement(Data *data)
+void saveOneElement(ParserContext *context)
 {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    dataBuffers = relocateMemmory(dataBuffers, nBuff, &allocatedBuffers, ADD_BUFFOR, sizeof(char *));
+    context->dataBuffers = relocateMemmory(context->dataBuffers, context->nBuff, &(context->allocatedBuffers), ADD_BUFFOR, sizeof(char *));
 
-    for (int i = nBuff; i < allocatedBuffers; i++)
+    for (int i = context->nBuff; i < context->allocatedBuffers; i++)
     {
-        dataBuffers[i] = alocateNewMemmory(dataBuffers[i], 1024, sizeof(char));
+        context->dataBuffers[i] = alocateNewMemmory(context->dataBuffers[i], 1024, sizeof(char));
     }
 
-    saveData(&tm, data, dataBuffers[nBuff]);
-    nBuff++;
+    saveData(&tm, context->data, context->dataBuffers[context->nBuff]);
+    context->nBuff++;
 }
 
 /**
@@ -217,13 +244,14 @@ void saveOneElement(Data *data)
  * emitter names, tags, and values from the element's attributes.
  * It assigns attribute values to the Data struct and prepares data for saving when needed.
  *
- * @param userData  A pointer to user data (the Data struct in this case).
+ * @param userData  A pointer to user data (the ParserContext struct in this case).
  * @param name      Name of the currently processed XML element.
  * @param attr      An array of attributes of the XML element (alternating name and attribute value).
  */
 void XMLCALL startElement(void *userData, const char *name, const char **attr)
 {
-    Data *data = (Data *)userData;
+    ParserContext *context = (ParserContext *)userData;
+    Data *data = context->data;
 
     if (!strcmp(name, "emitor"))
     {
@@ -260,7 +288,7 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
                 break;
             }
         }
-        saveOneElement(data);
+        saveOneElement(context);
     }
 }
 
@@ -269,12 +297,14 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
  *
  * This function decreases the tag counter when an XML element ends.
  *
- * @param userData  A pointer to user data (the Data struct in this case).
+ * @param userData  A pointer to user data (the ParserContext struct in this case).
  * @param name      Name of the currently terminated XML element.
  */
 void XMLCALL endElement(void *userData, const char *name)
 {
-    Data *data = (Data *)userData;
+    ParserContext *context = (ParserContext *)userData;
+    Data *data = context->data;
+
     if (data->nTags > 0)
     {
         data->nTags--;
@@ -287,7 +317,7 @@ void XMLCALL endElement(void *userData, const char *name)
  * This function is not currently implemented, but it could be used to handle text content
  * within XML elements.
  *
- * @param userData  A pointer to user data (the Data struct in this case).
+ * @param userData  A pointer to user data (the ParserContext struct in this case).
  * @param s         A pointer to the text data (string) contained in the XML element.
  * @param len       Length of the text data.
  */
@@ -299,7 +329,10 @@ void XMLCALL characterData(void *userData, const XML_Char *s, int len)
 int main()
 {
     Data data;
-    initData(&data); // Initialize the data structure to store parsed information
+    initData(&data);
+
+    ParserContext context;
+    initParserContext(&context, &data);
 
     /*
      * Support for external XML and CSV files.
@@ -323,7 +356,7 @@ int main()
     XML_Parser parser = XML_ParserCreate(NULL);
     XML_SetElementHandler(parser, startElement, endElement);
     XML_SetCharacterDataHandler(parser, characterData);
-    XML_SetUserData(parser, &data);
+    XML_SetUserData(parser, &context);
 
     // Write the CSV header to both the console and the output file
     printf("\"YYYY-MM-DD\",\"Hour\",\"Emitor.Tags\",\"Pkt_Value\"\n");
@@ -351,10 +384,10 @@ int main()
         }
         else
         {
-            for (int i = 0; i < nBuff; i++)
+            for (int i = 0; i < context.nBuff; i++)
             {
-                printf("%s", dataBuffers[i]);
-                if (fprintf(outputFile, "%s", dataBuffers[i]) < 0)
+                printf("%s", context.dataBuffers[i]);
+                if (fprintf(outputFile, "%s", context.dataBuffers[i]) < 0)
                 {
                     fprintf(stderr, "Błąd podczas zapisu do pliku wynikowego.\n");
                     fclose(inputFile);
@@ -363,11 +396,11 @@ int main()
                     return EXIT_FAILURE;
                 }
             }
-            nBuff = 0;
+            context.nBuff = 0;
         }
     }
 
-    freeMemmory(dataBuffers, nBuff);
+    freeMemmory(context.dataBuffers, context.nBuff);
     freeMemmory(data.tags, data.nTags);
 
     fclose(inputFile);
