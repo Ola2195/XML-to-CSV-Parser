@@ -21,9 +21,11 @@
 #define INPUT_FILENAME "example.xml"
 #define OUTPUT_FILENAME "wyniki.csv"
 
-#define STR_SIZE    15  // Maximum length of strings for emitter names, tags, and values
-#define ADD_TAG     5   // Number of additional tags to allocate when more space is needed
-#define ADD_BUFFOR  5   // Number of additional buffers to allocate when more space is needed
+#define STR_SIZE 15  // Maximum length of strings for emitter names, tags, and values
+#define ADD_TAG 5    // Number of additional tags to allocate when more space is needed
+#define ADD_BUFFOR 5 // Number of additional buffers to allocate when more space is needed
+
+const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
 
 /*
  * Structure to store parsed data from the XML file.
@@ -46,26 +48,24 @@ int nBuff = 0;             // Number of buffers currently in use
 int allocatedBuffers = 0;  // Total number of buffers allocated
 
 /**
- * @brief   Checks if a given string is present in a predefined array of tag names.
+ * @brief   Checks if a given string is present in an array.
 
- * @param val   Pointer to the string to be checked.
+ * @param val       Pointer to the string to be checked.
+ * @param array     A pointer to the array to be searched.
+ * @param arraySize The size of the array.
  * @return  Returns 1 if the value is found in the array, otherwise 0.
  */
-int valueInArray(const char *val)
+int valueInArray(const char *val, const char **array, int arraySize)
 {
-    const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
-
-    int arraySize = sizeof(tagNames) / sizeof(tagNames[0]);
     for (int i = 0; i < arraySize; i++)
     {
-        if (!strcmp(tagNames[i], val))
+        if (!strcmp(array[i], val))
         {
             return 1;
         }
     }
     return 0;
 }
-
 
 /**
  * @brief   Reallocates memory for a dynamic array when needed.
@@ -249,7 +249,7 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
             }
         }
     }
-    else if (data->nTags != 0 && valueInArray(name))
+    else if (data->nTags != 0 && valueInArray(name, tagNames, (sizeof(tagNames) / sizeof(tagNames[0]))))
     {
         addTag(data, name);
         for (int i = 0; attr[i]; i += 2)
