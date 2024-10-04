@@ -38,7 +38,7 @@ Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
    ```console
    ./expat_example [-v]
    ```
-   - The optional '-v' flag will enable verbose mode, printing parsed results to the console in addition to saving them to the CSV file.
+   - The optional `-v` flag will enable verbose mode, printing parsed results to the console in addition to saving them to the CSV file.
 
 3. The program will generate a CSV file named `wyniki.csv` in the current directory. The CSV will include a timestamp and data from the XML file in the following format:
 
