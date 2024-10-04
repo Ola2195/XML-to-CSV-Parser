@@ -29,6 +29,7 @@
 #define ADD_TAG 5    // Number of additional tags to allocate when more space is needed
 #define ADD_BUFFOR 5 // Number of additional buffers to allocate when more space is needed
 
+const char *tagFirstNames[] = {"status", "parametr", "stezenie"};
 const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
 
 /*
@@ -215,6 +216,7 @@ void saveData(struct tm *tm, Data *data, char *str)
     sprintf(str, "\"%d-%02d-%02d\",\"%d\",\"%s\",\"%s\"\n",
             tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour,
             oneTag, data->value);
+    printf("%s", str);
 }
 
 /**
@@ -267,11 +269,9 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
             }
         }
     }
-    else if (data->nTags == 0 && (!strcmp(name, "status") || !strcmp(name, "parametr") || !strcmp(name, "stezenie")))
+    else if (data->nTags == 0 && valueInArray(name, tagFirstNames, (sizeof(tagFirstNames) / sizeof(tagFirstNames[0]))))
     {
-        data->nTags = 0;
         addTag(data, name);
-
         for (int i = 0; attr[i]; i += 2)
         {
             if (strcmp(attr[i], "typ") == 0)
@@ -281,18 +281,20 @@ void XMLCALL startElement(void *userData, const char *name, const char **attr)
             }
         }
     }
-    else if (data->nTags != 0 && valueInArray(name, tagNames, (sizeof(tagNames) / sizeof(tagNames[0]))))
+    else if (data->nTags != 0)
     {
         addTag(data, name);
-        for (int i = 0; attr[i]; i += 2)
-        {
-            if (strcmp(attr[i], "pkt") == 0)
+        if(valueInArray(name, tagNames, (sizeof(tagNames) / sizeof(tagNames[0])))) {
+            for (int i = 0; attr[i]; i += 2)
             {
-                strcpy(data->value, attr[i + 1]);
-                break;
+                if (strcmp(attr[i], "pkt") == 0)
+                {
+                    strcpy(data->value, attr[i + 1]);
+                    break;
+                }
             }
+            saveOneElement(context);
         }
-        saveOneElement(context);
     }
 }
 
@@ -309,9 +311,11 @@ void XMLCALL endElement(void *userData, const char *name)
     ParserContext *context = (ParserContext *)userData;
     Data *data = context->data;
 
-    if (data->nTags > 0)
-    {
+    if (data->nTags > 0) {
         data->nTags--;
+        if(data->nTags == 1 && valueInArray(name, tagFirstNames, (sizeof(tagFirstNames) / sizeof(tagFirstNames[0])))) {
+            data->nTags--;
+        }
     }
 }
 
