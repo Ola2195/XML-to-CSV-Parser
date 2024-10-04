@@ -36,7 +36,7 @@ Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
 2. Run the program:
 
    ```console
-   ./expat_example [-v]
+   ./expat_example <input_file.xml> <output_file.csv> [-v]
    ```
    - The optional `-v` flag will enable verbose mode, printing parsed results to the console in addition to saving them to the CSV file.
 
@@ -56,10 +56,14 @@ For instance, after processing `example.xml`, the `wyniki.csv` file might contai
 "2024-10-01","10","K3.stezenie.CO2.wartosc","1319"
 ```
 
+## Handling Errors
+
+- **Invalid Arguments**: If fewer than two arguments (input and output files) are provided, the program will terminate and display a usage message.
+- **File Errors**: If the program encounters issues opening the XML or CSV files (e.g., wrong path, missing file), it will display an appropriate error message and stop.
+
 ## Troubleshooting
 
 - **Compilation Issues**: Ensure the Expat development libraries are installed. On Linux, use the provided package manager commands. If you're using macOS or another platform, make sure the appropriate headers are available.
-  
 - **File Errors**: If the program reports an error opening the XML file (`example.xml`), check the file's location and ensure it's in the same directory as the executable.
 
 ## Notes
