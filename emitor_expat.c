@@ -216,7 +216,6 @@ void saveData(struct tm *tm, Data *data, char *str)
     sprintf(str, "\"%d-%02d-%02d\",\"%d\",\"%s\",\"%s\"\n",
             tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour,
             oneTag, data->value);
-    printf("%s", str);
 }
 
 /**
