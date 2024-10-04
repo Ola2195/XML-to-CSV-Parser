@@ -18,20 +18,16 @@
 #include <expat.h>
 #include <time.h>
 
-#define INPUT_FILENAME "example.xml"
-#define OUTPUT_FILENAME "wyniki.csv"
+#define MIN_ARGC 2
+#define I_INPUT_FILE 1
+#define I_OUTPUT_FILE 2
+#define TRUE_ARG 1
+#define FALSE_ARG 0
+#define COMMUNICATS_FLAG "-v"
 
 #define STR_SIZE 15  // Maximum length of strings for emitter names, tags, and values
 #define ADD_TAG 5    // Number of additional tags to allocate when more space is needed
 #define ADD_BUFFOR 5 // Number of additional buffers to allocate when more space is needed
-
-/*
- * Flag for program parameters
- */
-#define COMMUNICATS_FLAG "-v"
-
-#define TRUE_PARAM 1
-#define FALSE_PARAM 0
 
 const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
 
@@ -336,15 +332,32 @@ void XMLCALL characterData(void *userData, const XML_Char *s, int len)
 
 int main(int argc, char *argv[])
 {
-    /*
-     * Checking program parameters.
-     */
-    int verboseFlag = FALSE_PARAM;
+    if (argc < MIN_ARGC + 1)
+    {
+        fprintf(stderr, "Zbyt mała ilość argumentów.\n");
+        return EXIT_FAILURE;
+    }
+
+    const char *inputFilename = argv[I_INPUT_FILE];
+    const char *outputFilename = argv[I_OUTPUT_FILE];
+    int verboseFlag = FALSE_ARG;
+
+    if (strstr(argv[I_INPUT_FILE], ".xml") == NULL)
+    {
+        fprintf(stderr, "Niepoprawny format pliku wejściowego.\n");
+        return EXIT_FAILURE;
+    }
+    if (strstr(argv[I_OUTPUT_FILE], ".csv") == NULL)
+    {
+        fprintf(stderr, "Niepoprawny format pliku wyjściowego.\n");
+        return EXIT_FAILURE;
+    }
+
     for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
         {
-            verboseFlag = TRUE_PARAM;
+            verboseFlag = TRUE_ARG;
         }
     }
 
@@ -357,14 +370,14 @@ int main(int argc, char *argv[])
     /*
      * Support for external XML and CSV files.
      */
-    FILE *inputFile = fopen(INPUT_FILENAME, "r");
+    FILE *inputFile = fopen(inputFilename, "r");
     if (!inputFile)
     {
         fprintf(stderr, "Nie można otworzyć pliku z danymi.\n");
         return EXIT_FAILURE;
     }
 
-    FILE *outputFile = fopen(OUTPUT_FILENAME, "w");
+    FILE *outputFile = fopen(outputFilename, "w");
     if (outputFile == NULL)
     {
         fprintf(stderr, "Nie można otworzyć pliku wynikowego.\n\n");
