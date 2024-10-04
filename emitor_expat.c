@@ -29,8 +29,9 @@
  * Flag for program parameters
  */
 #define COMMUNICATS_FLAG "-v"
-#define SHOW_COMMUNICATS 1
-#define HIDE_COMMUNICATS 0
+
+#define TRUE_PARAM 1
+#define FALSE_PARAM 0
 
 const char *tagNames[] = {"auto", "reka", "wartosc", "status", "niepewnosc", "standard"};
 
@@ -337,11 +338,13 @@ int main(int argc, char *argv[])
 {
     /*
      * Checking program parameters.
-     */ 
-    int verboseFlag = HIDE_COMMUNICATS;
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-v") == 0) {
-            verboseFlag = SHOW_COMMUNICATS;
+     */
+    int verboseFlag = FALSE_PARAM;
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], "-v") == 0)
+        {
+            verboseFlag = TRUE_PARAM;
         }
     }
 
