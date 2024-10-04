@@ -46,7 +46,27 @@ Ensure that the Expat library is linked correctly, as shown above (`-lexpat`).
    "YYYY-MM-DD","Hour","Emitor.Tags","Pkt_Value"
    ```
 
-## Example
+## Example XML Structure
+
+Make sure that your XML file follows a structure similar to the one expected by the program. Here is an example snippet of how the XML might look:
+
+```xml
+<emitory>
+  <emitor>
+    <status>
+      ...
+    </status>
+    <parametr type="sybstancja">
+      ...
+    </parametr>
+    <stezenie  type="sybstancja">
+      ...
+    </stezenie>
+  </emitor>
+</emitory>
+```
+
+## Example CSV Structure
 
 For instance, after processing `example.xml`, the `wyniki.csv` file might contain:
 
