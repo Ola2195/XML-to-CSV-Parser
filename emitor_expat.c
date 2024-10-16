@@ -23,6 +23,7 @@
 #define I_OUTPUT_FILE 2
 #define TRUE_ARG 1
 #define FALSE_ARG 0
+#define HELP_FLAG "-h"
 #define COMMUNICATS_FLAG "-v"
 
 #define STR_SIZE 15  // Maximum length of strings for emitter names, tags, and values
@@ -61,6 +62,22 @@ typedef struct
     int nBuff;
     int allocatedBuffers;
 } ParserContext;
+
+/**
+ * @brief Displays the program help.
+ */
+void print_help( void ) {
+    printf("Użycie: expat_example <plik_wejsciowy.xml> <plik_wyjsciowy.csv> [-v]\n");
+    printf("  -v            Włącza tryb szczegółowy (wyświetla przetworzone dane w konsoli)\n");
+    printf("\n");
+    printf("Program parsuje plik XML i konwertuje dane dotyczące emitorów do formatu CSV.\n");
+    printf("Plik wejściowy XML powinien zawierać dane o emitorach, a wynikowy plik CSV\n");
+    printf("zostanie wygenerowany z przetworzonymi wartościami, w tym z datą i godziną.\n");
+    printf("\n");
+    printf("Przykłady użycia:\n");
+    printf("  ./expat_example plik_wejsciowy.xml plik_wyjsciowy.csv\n");
+    printf("  ./expat_example plik_wejsciowy.xml plik_wyjsciowy.csv -v\n");
+}
 
 /**
  * @brief   Checks if a given string is present in an array.
@@ -335,6 +352,21 @@ void XMLCALL characterData(void *userData, const XML_Char *s, int len)
 
 int main(int argc, char *argv[])
 {
+    int verboseFlag = FALSE_ARG;
+
+    for (int i = 1; i < argc; i++)
+    {
+        if(strcmp(argv[i], HELP_FLAG) == 0)
+        {
+            print_help();
+            return EXIT_SUCCESS;
+        }
+        if (strcmp(argv[i], COMMUNICATS_FLAG) == 0)
+        {
+            verboseFlag = TRUE_ARG;
+        }
+    }
+
     if (argc < MIN_ARGC + 1)
     {
         fprintf(stderr, "Zbyt mała ilość argumentów.\n");
@@ -343,7 +375,6 @@ int main(int argc, char *argv[])
 
     const char *inputFilename = argv[I_INPUT_FILE];
     const char *outputFilename = argv[I_OUTPUT_FILE];
-    int verboseFlag = FALSE_ARG;
 
     if (strstr(argv[I_INPUT_FILE], ".xml") == NULL)
     {
@@ -354,14 +385,6 @@ int main(int argc, char *argv[])
     {
         fprintf(stderr, "Niepoprawny format pliku wyjściowego.\n");
         return EXIT_FAILURE;
-    }
-
-    for (int i = 1; i < argc; i++)
-    {
-        if (strcmp(argv[i], "-v") == 0)
-        {
-            verboseFlag = TRUE_ARG;
-        }
     }
 
     Data data;
